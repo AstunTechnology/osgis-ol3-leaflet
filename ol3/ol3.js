@@ -57,7 +57,8 @@ map.addLayer(districtLayer);
 
 var planningAppsLayer = new ol.layer.Vector({
     source: new ol.source.GeoJSON({
-        'projection': map.getView().getProjection()
+        'projection': map.getView().getProjection(),
+        'url': 'http://hub-dev.astun.co.uk/developmentcontrol/0.1/applications/search?status=live&gss_code=E07000214'
     }),
     style: new ol.style.Style({
         image: new ol.style.Icon(({
@@ -69,13 +70,6 @@ var planningAppsLayer = new ol.layer.Vector({
     })
 });
 map.addLayer(planningAppsLayer);
-
-// Define the URL used to fetch GeoJSON features
-var url = 'http://hub-dev.astun.co.uk/developmentcontrol/0.1/applications/search?status=live&gss_code=E07000214';
-reqwest({url: url, type: 'jsonp'}).then(function (data) {
-    planningAppsLayer.getSource().addFeatures(planningAppsLayer.getSource().readFeatures(data));
-    map.getView().fitExtent(planningAppsLayer.getSource().getExtent(), map.getSize());
-});
 
 // Create a popup overlay which will be used to display feature info
 var popup = new ol.Popup();
