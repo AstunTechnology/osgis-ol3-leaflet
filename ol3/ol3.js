@@ -18,7 +18,7 @@ var map = new ol.Map({
     layers: [
         new ol.layer.Tile({
             source: new ol.source.TileWMS({
-                url: 'http://t0.ads.astuntechnology.com/astuntechnology/osopen/service?',
+                url: 'http://t0.ads.astuntechnology.com/open/osopen/service?',
                 attributions: [
                     new ol.Attribution({html: 'Astun Data Service &copy; Ordnance Survey.'})
                 ],
@@ -61,7 +61,7 @@ map.addLayer(districtLayer);
 
 var planningAppsSource = new ol.source.GeoJSON({
     'projection': map.getView().getProjection(),
-    'url': 'http://hub-dev.astun.co.uk/developmentcontrol/0.1/applications/search?status=live&gss_code=E07000214&status=live'
+    'url': 'http://hub-dev.astun.co.uk/developmentcontrol/0.1/applications/search?status=live&gsscode=E07000214&status=live'
 });
 
 planningAppsSource.on('change', function (evt) {
