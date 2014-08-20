@@ -91,26 +91,50 @@ var popup = new ol.Popup();
 map.addOverlay(popup);
 
 map.on('click', function(evt) {
+
+    // Hide existing popup and reset it's class
+    popup.hide();
     popup.container.className = 'ol-popup';
-    // Attempt to find a marker from the appsLayer
+
+    // Attempt to find a marker from the planningAppsLayer
     var feature = map.forEachFeatureAtPixel(evt.pixel, function(feature, layer) {
         return feature;
     });
+
     if (feature) {
-        var geometry = feature.getGeometry();
-        var coord = geometry.getCoordinates();
+
+        var coord = feature.getGeometry().getCoordinates();
+        var info = template("<h2><a href='{caseurl}'>{casereference}</a></h2><p>{locationtext}</p><p>Status: {status} {statusdesc}</p>", feature.getProperties());
         popup.container.className = 'ol-popup marker';
-        popup.show(coord, "<h2><a href='" + feature.get('caseurl') + "'>" + feature.get('casereference') + "</a></h2><p>" + feature.get('locationtext') + "</p><p>Status: " + feature.get('status') + "</p>");
+        popup.show(coord, info);
+
     } else {
-        // popup.hide();
-        var url = districtLayer.getSource().getGetFeatureInfoUrl(evt.coordinate, map.getView().getResolution(), map.getView().getProjection(), {'INFO_FORMAT': 'text/javascript', 'format_options': 'callback:results', propertyName: 'NAME,AREA_CODE,DESCRIPTIO'});
+
+        var url = districtLayer.getSource().getGetFeatureInfoUrl(evt.coordinate,
+                                                                 map.getView().getResolution(),
+                                                                 map.getView().getProjection(),
+                                                                 {
+                                                                     'INFO_FORMAT': 'application/json',
+                                                                     'propertyName': 'NAME,AREA_CODE,DESCRIPTIO'
+                                                                 });
         reqwest({
             url: url,
-            type: 'jsonp',
-            jsonpCallbackName: 'results'
+            type: 'json',
         }).then(function (data) {
             var feature = data.features[0];
-            popup.show(evt.coordinate, "<h2>" + feature.properties.NAME + "</h2><p>" + feature.properties.DESCRIPTIO + "</p>");
+            var info = template("<h2>{NAME}</h2><p>{DESCRIPTIO}</p>", feature.properties);
+            popup.show(evt.coordinate, info);
         });
+
     }
 });
+
+/**
+ * Accepts a template string of the form 'Hello {a}, {b}' and a data object
+ * like {a: 'foo', b: 'bar'}, returns evaluated string ('Hello foo, bar').
+ */
+function template(str, data) {
+    return str.replace(/\{ *([\w_]+) *\}/g, function (str, key) {
+        return data[key];
+    });
+}
