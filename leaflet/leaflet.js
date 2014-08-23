@@ -62,7 +62,6 @@ map.on('click', function(e) {
 
 function getFeatureInfoUrl(map, layer, latlng, params) {
 
-    // Construct a GetFeatureInfo request URL given a point
     var point = map.latLngToContainerPoint(latlng, map.getZoom()),
         size = map.getSize(),
         bounds = map.getBounds(),
@@ -87,7 +86,6 @@ function getFeatureInfoUrl(map, layer, latlng, params) {
     };
 
     params = L.Util.extend(defaultParams, params || {});
-    console.log(params);
 
     params[params.version === '1.3.0' ? 'i' : 'x'] = point.x;
     params[params.version === '1.3.0' ? 'j' : 'y'] = point.y;
