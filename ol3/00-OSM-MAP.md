@@ -1,0 +1,25 @@
+## Basic map with OSM tiles
+
+Add the following to `ol3.js` to display a simple map displaying an OpenStreetMap base map in Web Mercator:
+
+```javascript
+var map = new ol.Map({
+    target: 'map',
+    layers: [
+        new ol.layer.Tile({
+            style: 'Road',
+            source: new ol.source.MapQuest({layer: 'osm'})
+        })
+    ],
+    view: new ol.View({
+        center: ol.proj.transform([-0.92, 52.96], 'EPSG:4326', 'EPSG:3857'),
+        zoom: 6
+    })
+});
+```
+
+### Notes
+
+#### Projection
+
+The default OL3 projection is [Spherical Mercator (EPSG:3857)](http://epsg.io/3857) which is used by Google Map, OSM amongst others. While Spherical Mercator's map units are in meters it's common to use longitude & latitude to represent coordinates and here we see the initial map center specified in [WGS84 (EPSG:4326)](http://epsg.io/4326) and transformed to Spherical Mercator.
