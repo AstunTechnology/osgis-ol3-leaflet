@@ -9,9 +9,9 @@ The workshop walks through building the same simple web mapping application firs
 * Basic map with OSM tiles
 * OS-GB Map with Ordnance Survey tiles
 * GeoJSON layer with markers
-    * Display info for GeoJSON layer
+    * Info for GeoJSON layer
 * WMS layer
-    * Display info for WMS layer
+    * Info for WMS layer
 
 ## Getting started
 
@@ -21,20 +21,12 @@ First clone or download (and unzip) [the repository from GitHub](https://github.
 
     git clone https://github.com/AstunTechnology/osgis-ol3-leaflet.git
 
-### Open your working files
-
-Change to the root of the repository and open `ol3/ol3.html` `ol3/ol3.js` and `ol3/ol3.css` in a text editor.
-
-### Start a local webserver
-
-You can start a local Python webserver by changing to the root of the repository in a command prompt and running:
-
-    python -m SimpleHTTPServer
-
-Then in a web browser navigate to [http://localhost:8000/ol3/ol3.html](http://localhost:8000/ol3/ol3.html) where you should see a placeholder for a map.
-
-
+Now you're ready to [start building an OpenLayers 3 map](ol3/README.md).
 
 ## Todo
 
 * Set up sub-domain for GeoServer server on AWS (osgis.astun.co.uk)
+
+## Extra credit
+
+* Style markers based on an attribute value

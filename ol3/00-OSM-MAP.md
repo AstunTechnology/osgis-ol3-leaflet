@@ -1,6 +1,6 @@
 ## Basic map with OSM tiles
 
-Add the following to `ol3.js` to display a simple map displaying an OpenStreetMap base map in Web Mercator:
+Edit `ol3.js` so that it looks as follows to display a simple map displaying an OpenStreetMap base map in Spherical Mercator:
 
 ```javascript
 var map = new ol.Map({

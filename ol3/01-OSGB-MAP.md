@@ -1,15 +1,15 @@
 ## OS-GB Map with Ordnance Survey tiles
 
-Updating our application to display a map in British National Grid (`EPSG:27700`) takes a little more work. The OSM map is in OL3's default projection (Web Mercator), covers the whole world and has well known resolutions (zoom levels). Using an alternative projection and a corresponding base map requires that we define the projection, map extents and resolutions.
+Displaying a map in British National Grid (`EPSG:27700`) takes a little more work. The OSM map is in OL3's default projection (Spherical Mercator), covers the whole world and has well known resolutions (zoom levels). Using an alternative projection and a corresponding base map requires that we define the projection, map extents and resolutions.
 
-Update `ol3.js` to contain the following, see the comments for explanation:
+Replace the contents of `ol3.js` with the following and read through the comments for explanation:
 
 ```javascript
-
-// Extent of the map in units of the projection
+// Extent of the map in units of the projection (these match our base map)
 var extent = [-3276800, -3276800, 3276800, 3276800];
 
-// Fixed resolutions to display the map at (pixels per ground unit (meters when the projection is British National Grid))
+// Fixed resolutions to display the map at (pixels per ground unit (meters when
+// the projection is British National Grid))
 var resolutions = [1600,800,400,200,100,50,25,10,5,2.5,1,0.5,0.25,0.125,0.0625];
 
 // Define British National Grid Proj4js projection (copied from http://epsg.io/27700.js)
@@ -51,3 +51,9 @@ var map = new ol.Map({
     })
 });
 ```
+
+### Notes
+
+#### Projection
+
+OL3 integrates [Proj4js](http://proj4js.org/) to transform coordinates from one coordinate system to another. [epsg.io](http://epsg.io/) provides definitions for most common projections including Proj4js definitions. The extents specified match those of our base map.
