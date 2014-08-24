@@ -1,15 +1,15 @@
-// Extent of the map in units of the projection
+// Extent of the map in units of the projection (these match our base map)
 var extent = [-3276800, -3276800, 3276800, 3276800];
 
-// Fixed resolutions to display the map at
+// Fixed resolutions to display the map at (pixels per ground unit (meters when
+// the projection is British National Grid))
 var resolutions = [1600,800,400,200,100,50,25,10,5,2.5,1,0.5,0.25,0.125,0.0625];
 
 // Define British National Grid Proj4js projection (copied from http://epsg.io/27700.js)
 proj4.defs("EPSG:27700","+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs");
 
-// Define a projection based on the included Proj4js projection definition.
-// Include the extent here and specify the resolutions as a property of the
-// View to specify the zoom levels that are available to the user.
+// Define an OL3 projection based on the included Proj4js projection
+// definition and set it's extent.
 var bng = ol.proj.get('EPSG:27700');
 bng.setExtent(extent);
 
@@ -59,18 +59,16 @@ map.addLayer(districtLayer);
 
 // -- Load planning applications as GeoJSON and zoom to their extent once loaded --
 
+// Define a GeoJSON source that will load features via a http call. By
+// specifying the projection of the map's view OL3 will transform the coordinates
+// for display
 var planningAppsSource = new ol.source.GeoJSON({
     'projection': map.getView().getProjection(),
     'url': 'http://hub-dev.astun.co.uk/developmentcontrol/0.1/applications/search?status=live&gsscode=E07000214&status=live'
 });
 
-planningAppsSource.on('change', function (evt) {
-    var src = evt.target;
-    if (src.getState() === 'ready') {
-        map.getView().fitExtent(src.getExtent(), map.getSize());
-    }
-});
-
+// Create a vector layer to display the features within the GeoJSON source and
+// applies a simple icon style to all features
 var planningAppsLayer = new ol.layer.Vector({
     source: planningAppsSource,
     style: new ol.style.Style({
@@ -82,7 +80,18 @@ var planningAppsLayer = new ol.layer.Vector({
         }))
     })
 });
+
+// Add the layer to the map
 map.addLayer(planningAppsLayer);
+
+// Once the change event of the source occurs and the source is 'ready' zoom to
+// the extent of the features
+planningAppsSource.on('change', function (evt) {
+    var src = evt.target;
+    if (src.getState() === 'ready') {
+        map.getView().fitExtent(src.getExtent(), map.getSize());
+    }
+});
 
 // -- Display information on click --
 
@@ -90,6 +99,7 @@ map.addLayer(planningAppsLayer);
 var popup = new ol.Popup();
 map.addOverlay(popup);
 
+// Add an event handler for the map "click" event
 map.on('click', function(evt) {
 
     // Hide existing popup and reset it's class
@@ -104,19 +114,25 @@ map.on('click', function(evt) {
     if (feature) {
 
         var coord = feature.getGeometry().getCoordinates();
-        var info = template("<h2><a href='{caseurl}'>{casereference}</a></h2><p>{locationtext}</p><p>Status: {status} {statusdesc}</p>", feature.getProperties());
+        var str = "<h2><a href='{caseurl}'>{casereference}</a></h2><p>{locationtext}</p>";
+            str += "<p>Status: {status} {statusdesc}</p>";
+        var info = template(str, feature.getProperties());
         popup.container.className = 'ol-popup marker';
         popup.show(coord, info);
 
     } else {
 
-        var url = districtLayer.getSource().getGetFeatureInfoUrl(evt.coordinate,
-                                                                 map.getView().getResolution(),
-                                                                 map.getView().getProjection(),
-                                                                 {
-                                                                     'INFO_FORMAT': 'application/json',
-                                                                     'propertyName': 'NAME,AREA_CODE,DESCRIPTIO'
-                                                                 });
+        var url = districtLayer
+                    .getSource()
+                    .getGetFeatureInfoUrl(
+                        evt.coordinate,
+                        map.getView().getResolution(),
+                        map.getView().getProjection(),
+                        {
+                            'INFO_FORMAT': 'application/json',
+                            'propertyName': 'NAME,AREA_CODE,DESCRIPTIO'
+                        }
+                    );
         reqwest({
             url: url,
             type: 'json',
