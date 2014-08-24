@@ -1,0 +1,387 @@
+<!DOCTYPE HTML>
+<html lang="en-US" >
+    
+    <head>
+        
+        <meta charset="UTF-8">
+        <title>OS-GB Map with Ordnance Survey tiles | Practical OpenLayers 3 &amp; Leaflet</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 1.0.0">
+        <meta name="HandheldFriendly" content="true"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+        <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+        
+    
+    
+    
+    <link rel="next" href="../ol3/02-GEOJSON.html" />
+    
+    
+    <link rel="prev" href="../ol3/00-OSM-MAP.html" />
+    
+
+        
+    </head>
+    <body>
+        
+        
+<link rel="stylesheet" href="../gitbook/style.css">
+
+
+        
+    <div class="book"  data-level="1.2" data-basepath=".." data-revision="1408916492122">
+    
+
+<div class="book-summary">
+    <div class="book-search">
+        <input type="text" placeholder="Type to search" class="form-control" />
+    </div>
+    <ul class="summary">
+        
+    	
+    	
+    	
+
+        
+
+        
+    
+        
+        <li class="chapter " data-level="0" data-path="index.html">
+            
+                
+                    <a href="../index.html">
+                        <i class="fa fa-check"></i>
+                        
+                         Introduction
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="1" data-path="ol3/README.html">
+            
+                
+                    <a href="../ol3/README.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.</b>
+                        
+                         OpenLayers 3
+                    </a>
+                
+            
+            
+            <ul class="articles">
+                
+    
+        
+        <li class="chapter " data-level="1.1" data-path="ol3/00-OSM-MAP.html">
+            
+                
+                    <a href="../ol3/00-OSM-MAP.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.1.</b>
+                        
+                         Basic map with OSM tiles
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter active" data-level="1.2" data-path="ol3/01-OSGB-MAP.html">
+            
+                
+                    <a href="../ol3/01-OSGB-MAP.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.2.</b>
+                        
+                         OS-GB Map with Ordnance Survey tiles
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="1.3" data-path="ol3/02-GEOJSON.html">
+            
+                
+                    <a href="../ol3/02-GEOJSON.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.3.</b>
+                        
+                         GeoJSON layer with markers
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="1.4" data-path="ol3/03-GEOJSON-INFO.html">
+            
+                
+                    <a href="../ol3/03-GEOJSON-INFO.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.4.</b>
+                        
+                         Info for GeoJSON layer
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="1.5" data-path="ol3/04-WMS-LAYER.html">
+            
+                
+                    <a href="../ol3/04-WMS-LAYER.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.5.</b>
+                        
+                         WMS layer
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="1.6" data-path="ol3/05-WMS-INFO.html">
+            
+                
+                    <a href="../ol3/05-WMS-INFO.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>1.6.</b>
+                        
+                         Info for WMS layer
+                    </a>
+                
+            
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="2" data-path="leaflet/README.html">
+            
+                
+                    <a href="../leaflet/README.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.</b>
+                        
+                         Leaflet
+                    </a>
+                
+            
+            
+        </li>
+    
+
+
+        
+        <li class="divider"></li>
+        <li>
+            <a href="http://www.gitbook.io/" target="blank" class="gitbook-link">Published using GitBook</a>
+        </li>
+        
+    </ul>
+</div>
+
+    <div class="book-body">
+        <div class="body-inner">
+            <div class="book-header">
+    <!-- Actions Left -->
+    <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
+    <a href="#" class="btn pull-left toggle-search" aria-label="Toggle search"><i class="fa fa-search"></i></a>
+    
+    <div id="font-settings-wrapper" class="dropdown pull-left">
+        <a href="#" class="btn toggle-dropdown" aria-label="Toggle font settings"><i class="fa fa-font"></i>
+        </a>
+        <div class="dropdown-menu font-settings">
+    <div class="dropdown-caret">
+        <span class="caret-outer"></span>
+        <span class="caret-inner"></span>
+    </div>
+
+    <div class="buttons">
+        <button type="button" id="reduce-font-size" class="button size-2">A</button>
+        <button type="button" id="enlarge-font-size" class="button size-2">A</button>
+    </div>
+
+    <div class="buttons font-family-list">
+        <button type="button" data-font="0" class="button">Serif</button>
+        <button type="button" data-font="1" class="button">Sans</button>
+    </div>
+
+    <div class="buttons color-theme-list">
+        <button type="button" id="color-theme-preview-0" class="button size-3" data-theme="0">White</button>
+        <button type="button" id="color-theme-preview-1" class="button size-3" data-theme="1">Sepia</button>
+        <button type="button" id="color-theme-preview-2" class="button size-3" data-theme="2">Night</button>
+    </div>
+</div>
+
+    </div>
+
+    <!-- Actions Right -->
+    
+    <div class="dropdown pull-right">
+        <a href="#" class="btn toggle-dropdown" aria-label="Toggle share dropdown"><i class="fa fa-share-alt"></i>
+        </a>
+        <div class="dropdown-menu font-settings dropdown-left">
+            <div class="dropdown-caret">
+                <span class="caret-outer"></span>
+                <span class="caret-inner"></span>
+            </div>
+            <div class="buttons">
+                <button type="button" data-sharing="twitter" class="button">Twitter</button>
+                <button type="button" data-sharing="google-plus" class="button">Google</button>
+                <button type="button" data-sharing="facebook" class="button">Facebook</button>
+                <button type="button" data-sharing="weibo" class="button">Weibo</button>
+                <button type="button" data-sharing="instapaper" class="button">Instapaper</button>
+            </div>
+        </div>
+    </div>
+    
+
+    
+    <a href="#" target="_blank" class="btn pull-right google-plus-sharing-link sharing-link" data-sharing="google-plus" aria-label="Share on Google Plus"><i class="fa fa-google-plus"></i></a>
+    
+    
+    <a href="#" target="_blank" class="btn pull-right facebook-sharing-link sharing-link" data-sharing="facebook" aria-label="Share on Facebook"><i class="fa fa-facebook"></i></a>
+    
+    
+    <a href="#" target="_blank" class="btn pull-right twitter-sharing-link sharing-link" data-sharing="twitter" aria-label="Share on Twitter"><i class="fa fa-twitter"></i></a>
+    
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../" >Practical OpenLayers 3 &amp; Leaflet</a>
+    </h1>
+</div>
+
+            <div class="page-wrapper" tabindex="-1">
+                <div class="page-inner">
+                
+                
+                    <section class="normal" id="section-gitbook_758">
+                    
+                        <h2 id="os-gb-map-with-ordnance-survey-tiles">OS-GB Map with Ordnance Survey tiles</h2>
+<p>Displaying a map in British National Grid (<code>EPSG:27700</code>) takes a little more work. The OSM map is in OL3&#39;s default projection (Spherical Mercator), covers the whole world and has well known resolutions (zoom levels). Using an alternative projection and a corresponding base map requires that we define the projection, map extents and resolutions.</p>
+<p>Replace the contents of <code>ol3.js</code> with the following and read through the comments for explanation:</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// Extent of the map in units of the projection (these match our base map)</span>
+<span class="hljs-keyword">var</span> extent = [-<span class="hljs-number">3276800</span>, -<span class="hljs-number">3276800</span>, <span class="hljs-number">3276800</span>, <span class="hljs-number">3276800</span>];
+
+<span class="hljs-comment">// Fixed resolutions to display the map at (pixels per ground unit (meters when</span>
+<span class="hljs-comment">// the projection is British National Grid))</span>
+<span class="hljs-keyword">var</span> resolutions = [<span class="hljs-number">1600</span>,<span class="hljs-number">800</span>,<span class="hljs-number">400</span>,<span class="hljs-number">200</span>,<span class="hljs-number">100</span>,<span class="hljs-number">50</span>,<span class="hljs-number">25</span>,<span class="hljs-number">10</span>,<span class="hljs-number">5</span>,<span class="hljs-number">2.5</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0.5</span>,<span class="hljs-number">0.25</span>,<span class="hljs-number">0.125</span>,<span class="hljs-number">0.0625</span>];
+
+<span class="hljs-comment">// Define British National Grid Proj4js projection (copied from http://epsg.io/27700.js)</span>
+proj4.defs(<span class="hljs-string">"EPSG:27700"</span>,<span class="hljs-string">"+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs"</span>);
+
+<span class="hljs-comment">// Define an OL3 projection based on the included Proj4js projection</span>
+<span class="hljs-comment">// definition and set it's extent.</span>
+<span class="hljs-keyword">var</span> bng = ol.proj.get(<span class="hljs-string">'EPSG:27700'</span>);
+bng.setExtent(extent);
+
+<span class="hljs-keyword">var</span> map = <span class="hljs-keyword">new</span> ol.Map({
+    target: <span class="hljs-string">'map'</span>,
+    layers: [
+        <span class="hljs-keyword">new</span> ol.layer.Tile({
+            source: <span class="hljs-keyword">new</span> ol.source.TileWMS({
+                url: <span class="hljs-string">'http://t0.ads.astuntechnology.com/open/osopen/service?'</span>,
+                attributions: [
+                    <span class="hljs-keyword">new</span> ol.Attribution({html: <span class="hljs-string">'Astun Data Service &amp;copy; Ordnance Survey.'</span>})
+                ],
+                params: {
+                    <span class="hljs-string">'LAYERS'</span>: <span class="hljs-string">'osopen'</span>,
+                    <span class="hljs-string">'FORMAT'</span>: <span class="hljs-string">'image/png'</span>,
+                    <span class="hljs-string">'TILED'</span>: <span class="hljs-literal">true</span>
+                },
+                <span class="hljs-comment">// Define a TileGrid to ensure that WMS requests are made for</span>
+                <span class="hljs-comment">// tiles at the correct resolutions and tile boundaries</span>
+                tileGrid: <span class="hljs-keyword">new</span> ol.tilegrid.TileGrid({
+                    origin: extent.slice(<span class="hljs-number">0</span>, <span class="hljs-number">2</span>),
+                    resolutions: resolutions
+                })
+            })
+        })
+    ],
+    view: <span class="hljs-keyword">new</span> ol.View({
+        projection: bng,
+        resolutions: resolutions,
+        center: [<span class="hljs-number">413674</span>, <span class="hljs-number">289141</span>],
+        zoom: <span class="hljs-number">0</span>
+    })
+});
+</code></pre>
+<h3 id="notes">Notes</h3>
+<h4 id="projection">Projection</h4>
+<p>OL3 integrates <a href="http://proj4js.org/" target="_blank">Proj4js</a> to transform coordinates from one coordinate system to another. <a href="http://epsg.io/" target="_blank">epsg.io</a> provides definitions for most common projections including Proj4js definitions. The extents specified match those of our base map.</p>
+
+                    
+                    </section>
+                
+                
+                </div>
+            </div>
+        </div>
+
+        
+        <a href="../ol3/00-OSM-MAP.html" class="navigation navigation-prev " aria-label="Previous page: Basic map with OSM tiles"><i class="fa fa-angle-left"></i></a>
+        
+        
+        <a href="../ol3/02-GEOJSON.html" class="navigation navigation-next " aria-label="Next page: GeoJSON layer with markers"><i class="fa fa-angle-right"></i></a>
+        
+    </div>
+</div>
+
+        
+<script src="../gitbook/app.js"></script>
+
+    
+    <script src="https://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+    
+    <script src="../gitbook/plugins/gitbook-plugin-mathjax/plugin.js"></script>
+    
+
+    
+    <script src="../gitbook/plugins/gitbook-plugin-livereload/plugin.js"></script>
+    
+
+<script>
+require(["gitbook"], function(gitbook) {
+    var config = {"fontSettings":{"theme":null,"family":"sans","size":2}};
+    gitbook.start(config);
+});
+</script>
+
+        
+    </body>
+    
+</html>
