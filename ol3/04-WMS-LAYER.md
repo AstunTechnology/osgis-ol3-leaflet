@@ -2,7 +2,7 @@
 
 Adding a WMS overlay layer in the same projection as the map is also fairly straightforward, in this example we are adding a local authority district layer from [GeoServer](http://geoserver.org/).
 
-Add the following *just above* where you added the GeoJSON source a few steps back:
+Add the following *just above* where you added the code to add a GeoJSON layer (`// -- GeoJSON layer --`) a few steps back:
 
 ```javascript
 // -- Load GB disticts as a WMS layer --

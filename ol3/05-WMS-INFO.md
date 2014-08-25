@@ -20,9 +20,10 @@ map.on('click', function(evt) {
     if (feature) {
 
         var coord = feature.getGeometry().getCoordinates();
-        var str = "<h2><a href='{caseurl}'>{casereference}</a></h2><p>{locationtext}</p>";
-            str += "<p>Status: {status} {statusdesc}</p>";
-        var info = template(str, feature.getProperties());
+        var props = feature.getProperties();
+        var info = "<h2><a href='" + props.caseurl + "'>" + props.casereference + "</a></h2>";
+            info += "<p>" + props.locationtext + "</p>";
+            info += "<p>Status: " + props.status + " " + props.statusdesc + "</p>";
         popup.container.className = 'ol-popup marker';
         popup.show(coord, info);
 
@@ -39,15 +40,18 @@ map.on('click', function(evt) {
                             'propertyName': 'NAME,AREA_CODE,DESCRIPTIO'
                         }
                     );
+
         reqwest({
             url: url,
             type: 'json',
         }).then(function (data) {
             var feature = data.features[0];
-            var info = template("<h2>{NAME}</h2><p>{DESCRIPTIO}</p>", feature.properties);
+            var props = feature.properties;
+            var info = "<h2>" + props.NAME + "</h2><p>" + props.DESCRIPTIO + "</p>";
             popup.show(evt.coordinate, info);
         });
 
     }
+
 });
 ```

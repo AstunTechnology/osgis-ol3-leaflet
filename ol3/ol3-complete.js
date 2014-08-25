@@ -57,7 +57,7 @@ var districtLayer = new ol.layer.Image({
 });
 map.addLayer(districtLayer);
 
-// -- Load planning applications as GeoJSON and zoom to their extent once loaded --
+// -- GeoJSON layer --
 
 // Define a GeoJSON source that will load features via a http call. By
 // specifying the projection of the map's view OL3 will transform the coordinates
@@ -114,9 +114,10 @@ map.on('click', function(evt) {
     if (feature) {
 
         var coord = feature.getGeometry().getCoordinates();
-        var str = "<h2><a href='{caseurl}'>{casereference}</a></h2><p>{locationtext}</p>";
-            str += "<p>Status: {status} {statusdesc}</p>";
-        var info = template(str, feature.getProperties());
+        var props = feature.getProperties();
+        var info = "<h2><a href='" + props.caseurl + "'>" + props.casereference + "</a></h2>";
+            info += "<p>" + props.locationtext + "</p>";
+            info += "<p>Status: " + props.status + " " + props.statusdesc + "</p>";
         popup.container.className = 'ol-popup marker';
         popup.show(coord, info);
 
@@ -133,24 +134,17 @@ map.on('click', function(evt) {
                             'propertyName': 'NAME,AREA_CODE,DESCRIPTIO'
                         }
                     );
+
         reqwest({
             url: url,
             type: 'json',
         }).then(function (data) {
             var feature = data.features[0];
-            var info = template("<h2>{NAME}</h2><p>{DESCRIPTIO}</p>", feature.properties);
+            var props = feature.properties;
+            var info = "<h2>" + props.NAME + "</h2><p>" + props.DESCRIPTIO + "</p>";
             popup.show(evt.coordinate, info);
         });
 
     }
-});
 
-/**
- * Accepts a template string of the form 'Hello {a}, {b}' and a data object
- * like {a: 'foo', b: 'bar'}, returns evaluated string ('Hello foo, bar').
- */
-function template(str, data) {
-    return str.replace(/\{ *([\w_]+) *\}/g, function (str, key) {
-        return data[key];
-    });
-}
+});

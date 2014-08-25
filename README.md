@@ -25,8 +25,9 @@ Now you're ready to [start building an OpenLayers 3 map](ol3/README.md).
 
 ## Todo
 
-* Set up sub-domain for GeoServer server on AWS (osgis.astun.co.uk)
+* Set up another demo WMS layer
 
 ## Extra credit
 
 * Style markers based on an attribute value
+* Add additional WMS layer

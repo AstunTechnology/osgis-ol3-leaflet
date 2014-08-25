@@ -5,7 +5,7 @@ Loading a GeoJSON features returned from an API call is fairly straight forward 
 Add the following to be bottom of `ol3.js`:
 
 ```javascript
-// -- Load planning applications as GeoJSON and zoom to their extent once loaded --
+// -- GeoJSON layer --
 
 // Define a GeoJSON source that will load features via a http call. By
 // specifying the projection of the map's view OL3 will transform the coordinates
