@@ -18,7 +18,7 @@ Navigating to [http://localhost:8000/ol3/ol3.html](http://localhost:8000/ol3/ol3
 
 ### Editing files
 
-To get started coding open `ol3/ol3.html` `ol3/ol3.js` and `ol3/ol3.css` in a text editor then move on to building a [basic map with OSM tiles](00-OSM-MAP.md).
+To get started coding open `ol3/ol3.js` in a text editor then move on to building a [basic map with OSM tiles](00-OSM-MAP.md). The other supporting files include:
 
 #### HTML
 
