@@ -58,7 +58,7 @@ map.on('click', function(evt) {
 
 ### All done!
 
-At this point you should have a working OpenLayers 3 web map client. Visit the [OpenLayers 3 website](http://ol3js.com) and [API docs](http://ol3js.org/en/master/apidoc/) for more information and to keep building.
+At this point you should have a working OpenLayers 3 web map client. Visit the [OpenLayers 3 website](http://ol3js.org) and [API docs](http://ol3js.org/en/master/apidoc/) for more information and to keep building.
 
 ### What's next?
 
