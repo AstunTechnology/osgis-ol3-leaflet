@@ -33,7 +33,7 @@
 
 
         
-    <div class="book"  data-level="1.5" data-basepath=".." data-revision="1408916492122">
+    <div class="book"  data-level="1.5" data-basepath=".." data-revision="1408954478287">
     
 
 <div class="book-summary">
@@ -287,7 +287,7 @@
                 <div class="page-inner">
                 
                 
-                    <section class="normal" id="section-gitbook_756">
+                    <section class="normal" id="section-gitbook_5">
                     
                         <h2 id="wms-layer">WMS layer</h2>
 <p>Adding a WMS overlay layer in the same projection as the map is also fairly straightforward, in this example we are adding a local authority district layer from <a href="http://geoserver.org/" target="_blank">GeoServer</a>.</p>
@@ -296,7 +296,7 @@
 
 <span class="hljs-keyword">var</span> districtLayer = <span class="hljs-keyword">new</span> ol.layer.Image({
     source: <span class="hljs-keyword">new</span> ol.source.ImageWMS({
-        url: <span class="hljs-string">'http://ec2-54-216-41-47.eu-west-1.compute.amazonaws.com/geoserver/osgb/wms?'</span>,
+        url: <span class="hljs-string">'http://osgis.astun.co.uk/geoserver/osgb/wms?'</span>,
         params: {
             <span class="hljs-string">'LAYERS'</span>: <span class="hljs-string">'osgb:district_borough_unitary_region'</span>
         },
@@ -332,10 +332,6 @@ map.addLayer(districtLayer);
 
     
     <script src="../gitbook/plugins/gitbook-plugin-mathjax/plugin.js"></script>
-    
-
-    
-    <script src="../gitbook/plugins/gitbook-plugin-livereload/plugin.js"></script>
     
 
 <script>
