@@ -33,7 +33,7 @@
 
 
         
-    <div class="book"  data-level="1.4" data-basepath=".." data-revision="1408954478287">
+    <div class="book"  data-level="1.4" data-basepath=".." data-revision="1408971597026">
     
 
 <div class="book-summary">
@@ -287,7 +287,7 @@
                 <div class="page-inner">
                 
                 
-                    <section class="normal" id="section-gitbook_4">
+                    <section class="normal" id="section-gitbook_5">
                     
                         <h2 id="info-for-geojson-layer">Info for GeoJSON layer</h2>
 <p>Displaying information associated with a marker requires a popup overlay and an event handler that finds the closest marker and displays the popup showing the associated features information.</p>
@@ -313,26 +313,16 @@ map.on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><sp
     <span class="hljs-keyword">if</span> (feature) {
 
         <span class="hljs-keyword">var</span> coord = feature.getGeometry().getCoordinates();
-        <span class="hljs-keyword">var</span> str = <span class="hljs-string">"&lt;h2&gt;&lt;a href='{caseurl}'&gt;{casereference}&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;{locationtext}&lt;/p&gt;"</span>;
-            str += <span class="hljs-string">"&lt;p&gt;Status: {status} {statusdesc}&lt;/p&gt;"</span>;
-        <span class="hljs-keyword">var</span> info = template(str, feature.getProperties());
+        <span class="hljs-keyword">var</span> props = feature.getProperties();
+        <span class="hljs-keyword">var</span> info = <span class="hljs-string">"&lt;h2&gt;&lt;a href='"</span> + props.caseurl + <span class="hljs-string">"'&gt;"</span> + props.casereference + <span class="hljs-string">"&lt;/a&gt;&lt;/h2&gt;"</span>;
+            info += <span class="hljs-string">"&lt;p&gt;"</span> + props.locationtext + <span class="hljs-string">"&lt;/p&gt;"</span>;
+            info += <span class="hljs-string">"&lt;p&gt;Status: "</span> + props.status + <span class="hljs-string">" "</span> + props.statusdesc + <span class="hljs-string">"&lt;/p&gt;"</span>;
         popup.container.className = <span class="hljs-string">'ol-popup marker'</span>;
         popup.show(coord, info);
 
     }
 
 });
-
-<span class="hljs-comment">/**
- * Utility function that accepts a template string of the form
- * 'Hello {a}, {b}' and a data object like {a: 'foo', b: 'bar'},
- * returns evaluated string ('Hello foo, bar').
- */</span>
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">template</span><span class="hljs-params">(str, data)</span> </span>{
-    <span class="hljs-keyword">return</span> str.replace(<span class="hljs-regexp">/\{ *([\w_]+) *\}/g</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(str, key)</span> </span>{
-        <span class="hljs-keyword">return</span> data[key];
-    });
-}
 </code></pre>
 <h3 id="notes">Notes</h3>
 <h4 id="popup">Popup</h4>

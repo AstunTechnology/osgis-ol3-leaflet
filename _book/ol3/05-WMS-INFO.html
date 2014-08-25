@@ -33,7 +33,7 @@
 
 
         
-    <div class="book"  data-level="1.6" data-basepath=".." data-revision="1408954478287">
+    <div class="book"  data-level="1.6" data-basepath=".." data-revision="1408971597026">
     
 
 <div class="book-summary">
@@ -307,9 +307,10 @@ map.on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><sp
     <span class="hljs-keyword">if</span> (feature) {
 
         <span class="hljs-keyword">var</span> coord = feature.getGeometry().getCoordinates();
-        <span class="hljs-keyword">var</span> str = <span class="hljs-string">"&lt;h2&gt;&lt;a href='{caseurl}'&gt;{casereference}&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;{locationtext}&lt;/p&gt;"</span>;
-            str += <span class="hljs-string">"&lt;p&gt;Status: {status} {statusdesc}&lt;/p&gt;"</span>;
-        <span class="hljs-keyword">var</span> info = template(str, feature.getProperties());
+        <span class="hljs-keyword">var</span> props = feature.getProperties();
+        <span class="hljs-keyword">var</span> info = <span class="hljs-string">"&lt;h2&gt;&lt;a href='"</span> + props.caseurl + <span class="hljs-string">"'&gt;"</span> + props.casereference + <span class="hljs-string">"&lt;/a&gt;&lt;/h2&gt;"</span>;
+            info += <span class="hljs-string">"&lt;p&gt;"</span> + props.locationtext + <span class="hljs-string">"&lt;/p&gt;"</span>;
+            info += <span class="hljs-string">"&lt;p&gt;Status: "</span> + props.status + <span class="hljs-string">" "</span> + props.statusdesc + <span class="hljs-string">"&lt;/p&gt;"</span>;
         popup.container.className = <span class="hljs-string">'ol-popup marker'</span>;
         popup.show(coord, info);
 
@@ -326,16 +327,19 @@ map.on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><sp
                             <span class="hljs-string">'propertyName'</span>: <span class="hljs-string">'NAME,AREA_CODE,DESCRIPTIO'</span>
                         }
                     );
+
         reqwest({
             url: url,
             type: <span class="hljs-string">'json'</span>,
         }).then(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> </span>{
             <span class="hljs-keyword">var</span> feature = data.features[<span class="hljs-number">0</span>];
-            <span class="hljs-keyword">var</span> info = template(<span class="hljs-string">"&lt;h2&gt;{NAME}&lt;/h2&gt;&lt;p&gt;{DESCRIPTIO}&lt;/p&gt;"</span>, feature.properties);
+            <span class="hljs-keyword">var</span> props = feature.properties;
+            <span class="hljs-keyword">var</span> info = <span class="hljs-string">"&lt;h2&gt;"</span> + props.NAME + <span class="hljs-string">"&lt;/h2&gt;&lt;p&gt;"</span> + props.DESCRIPTIO + <span class="hljs-string">"&lt;/p&gt;"</span>;
             popup.show(evt.coordinate, info);
         });
 
     }
+
 });
 </code></pre>
 
