@@ -9,7 +9,7 @@ Add the following *just above* where you added the GeoJSON source a few steps ba
 
 var districtLayer = new ol.layer.Image({
     source: new ol.source.ImageWMS({
-        url: 'http://ec2-54-216-41-47.eu-west-1.compute.amazonaws.com/geoserver/osgb/wms?',
+        url: 'http://osgis.astun.co.uk/geoserver/osgb/wms?',
         params: {
             'LAYERS': 'osgb:district_borough_unitary_region'
         },

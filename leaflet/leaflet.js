@@ -36,7 +36,7 @@ reqwest({
     map.fitBounds(geojson.getBounds());
 });
 
-var planningAppsLayer = L.tileLayer.wms('http://ec2-54-216-41-47.eu-west-1.compute.amazonaws.com/geoserver/osgb/wms?', {
+var planningAppsLayer = L.tileLayer.wms('http://osgis.astun.co.uk/geoserver/osgb/wms?', {
     layers: 'osgb:district_borough_unitary_region',
     format: 'image/png',
     transparent: true,
