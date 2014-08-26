@@ -46,13 +46,19 @@ var map = new ol.Map({
 
 // -- Load GB disticts as a WMS layer --
 
-var districtLayer = new ol.layer.Image({
-    source: new ol.source.ImageWMS({
-        url: 'http://osgis.astun.co.uk/geoserver/osgb/wms?',
+var districtLayer = new ol.layer.Tile({
+    source: new ol.source.TileWMS({
+        url: 'http://osgis.astun.co.uk/geoserver/gwc/service/wms?',
         params: {
-            'LAYERS': 'osgb:district_borough_unitary_region'
+            'LAYERS': 'osgb:district_borough_unitary_region',
+            'VERSION': '1.1.1',
+            'FORMAT': 'image/png',
+            'TILED': true
         },
-        extent: extent
+        tileGrid: new ol.tilegrid.TileGrid({
+            origin: extent.slice(0, 2),
+            resolutions: resolutions
+        })
     })
 });
 map.addLayer(districtLayer);
