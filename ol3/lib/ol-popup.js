@@ -4,9 +4,6 @@ ol.Popup = function(opt_options) {
 
     this.container = document.createElement('div');
     this.container.className = 'ol-popup';
-    if (options.class) {
-        this.container.className += ' ' + options.class;
-    }
 
     this.closer = document.createElement('a');
     this.closer.className = 'ol-popup-closer';
