@@ -7,8 +7,7 @@ var map = new ol.Map({
     target: 'map',
     layers: [
         new ol.layer.Tile({
-            style: 'Road',
-            source: new ol.source.MapQuest({layer: 'osm'})
+            source: new ol.source.OSM()
         })
     ],
     view: new ol.View({
