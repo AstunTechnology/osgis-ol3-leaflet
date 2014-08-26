@@ -33,7 +33,7 @@
 
 
         
-    <div class="book"  data-level="1.6" data-basepath=".." data-revision="1408978343806">
+    <div class="book"  data-level="1.6" data-basepath=".." data-revision="1409085879454">
     
 
 <div class="book-summary">
@@ -196,6 +196,108 @@
                 
             
             
+            <ul class="articles">
+                
+    
+        
+        <li class="chapter " data-level="2.1" data-path="leaflet/00-OSM-MAP.html">
+            
+                
+                    <a href="../leaflet/00-OSM-MAP.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.1.</b>
+                        
+                         Basic map with OSM tiles
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="2.2" data-path="leaflet/01-OSGB-MAP.html">
+            
+                
+                    <a href="../leaflet/01-OSGB-MAP.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.2.</b>
+                        
+                         OS-GB Map with Ordnance Survey tiles
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="2.3" data-path="leaflet/02-GEOJSON.html">
+            
+                
+                    <a href="../leaflet/02-GEOJSON.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.3.</b>
+                        
+                         GeoJSON layer with markers
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="2.4" data-path="leaflet/03-GEOJSON-INFO.html">
+            
+                
+                    <a href="../leaflet/03-GEOJSON-INFO.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.4.</b>
+                        
+                         Info for GeoJSON layer
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="2.5" data-path="leaflet/04-WMS-LAYER.html">
+            
+                
+                    <a href="../leaflet/04-WMS-LAYER.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.5.</b>
+                        
+                         WMS layer
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="2.6" data-path="leaflet/05-WMS-INFO.html">
+            
+                
+                    <a href="../leaflet/05-WMS-INFO.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.6.</b>
+                        
+                         Info for WMS layer
+                    </a>
+                
+            
+            
+        </li>
+    
+
+            </ul>
+            
         </li>
     
 
@@ -287,10 +389,10 @@
                 <div class="page-inner">
                 
                 
-                    <section class="normal" id="section-gitbook_8">
+                    <section class="normal" id="section-gitbook_14">
                     
                         <h2 id="info-for-wms-layer">Info for WMS layer</h2>
-<p>In order to display information for the WMS layer we need to make a <code>GetFeatureInfo</code> request to the WMS server. OL3 provides a <code>getGetFeatureInfoUrl</code> function to build the URL which we then make a request to using the <a href="https://github.com/ded/reqwest" target="_blank">reqwest library</a>.</p>
+<p>In order to display information for the WMS layer we need to make a <code>GetFeatureInfo</code> request to the WMS server. OL3 provides a <a href="http://ol3js.org/en/master/apidoc/ol.source.ImageWMS.html#getGetFeatureInfoUrl" target="_blank"><code>getGetFeatureInfoUrl</code></a> function to build the URL which we then make a request to using the <a href="https://github.com/ded/reqwest" target="_blank">reqwest library</a>.</p>
 <p>Update <code>ol3.js</code> replacing the existing event handler for the map &quot;click&quot; event with the following which sends a GetFeatureInfo request if the click was not over a marker and hence no feature is found:</p>
 <pre><code class="lang-javascript"><span class="hljs-comment">// Add an event handler for the map "click" event</span>
 map.on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(evt)</span> </span>{

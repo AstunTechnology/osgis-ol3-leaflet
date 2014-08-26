@@ -33,7 +33,7 @@
 
 
         
-    <div class="book"  data-level="1.5" data-basepath=".." data-revision="1408978343806">
+    <div class="book"  data-level="1.5" data-basepath=".." data-revision="1409085879454">
     
 
 <div class="book-summary">
@@ -196,6 +196,108 @@
                 
             
             
+            <ul class="articles">
+                
+    
+        
+        <li class="chapter " data-level="2.1" data-path="leaflet/00-OSM-MAP.html">
+            
+                
+                    <a href="../leaflet/00-OSM-MAP.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.1.</b>
+                        
+                         Basic map with OSM tiles
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="2.2" data-path="leaflet/01-OSGB-MAP.html">
+            
+                
+                    <a href="../leaflet/01-OSGB-MAP.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.2.</b>
+                        
+                         OS-GB Map with Ordnance Survey tiles
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="2.3" data-path="leaflet/02-GEOJSON.html">
+            
+                
+                    <a href="../leaflet/02-GEOJSON.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.3.</b>
+                        
+                         GeoJSON layer with markers
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="2.4" data-path="leaflet/03-GEOJSON-INFO.html">
+            
+                
+                    <a href="../leaflet/03-GEOJSON-INFO.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.4.</b>
+                        
+                         Info for GeoJSON layer
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="2.5" data-path="leaflet/04-WMS-LAYER.html">
+            
+                
+                    <a href="../leaflet/04-WMS-LAYER.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.5.</b>
+                        
+                         WMS layer
+                    </a>
+                
+            
+            
+        </li>
+    
+        
+        <li class="chapter " data-level="2.6" data-path="leaflet/05-WMS-INFO.html">
+            
+                
+                    <a href="../leaflet/05-WMS-INFO.html">
+                        <i class="fa fa-check"></i>
+                        
+                            <b>2.6.</b>
+                        
+                         Info for WMS layer
+                    </a>
+                
+            
+            
+        </li>
+    
+
+            </ul>
+            
         </li>
     
 
@@ -287,20 +389,27 @@
                 <div class="page-inner">
                 
                 
-                    <section class="normal" id="section-gitbook_7">
+                    <section class="normal" id="section-gitbook_13">
                     
                         <h2 id="wms-layer">WMS layer</h2>
 <p>Adding a WMS overlay layer in the same projection as the map is also fairly straightforward, in this example we are adding a local authority district layer from <a href="http://geoserver.org/" target="_blank">GeoServer</a>.</p>
+<p>Here we are defining a cached tiled layer similar to our base map and again defining a <code>tileGrid</code> to ensure that the requests are for the appropriate resolutions (scales) and line up with the cache grid.</p>
 <p>Add the following <em>just above</em> where you added the code to add a GeoJSON layer (<code>// -- GeoJSON layer --</code>) a few steps back:</p>
 <pre><code class="lang-javascript"><span class="hljs-comment">// -- Load GB disticts as a WMS layer --</span>
 
-<span class="hljs-keyword">var</span> districtLayer = <span class="hljs-keyword">new</span> ol.layer.Image({
-    source: <span class="hljs-keyword">new</span> ol.source.ImageWMS({
-        url: <span class="hljs-string">'http://osgis.astun.co.uk/geoserver/osgb/wms?'</span>,
+<span class="hljs-keyword">var</span> districtLayer = <span class="hljs-keyword">new</span> ol.layer.Tile({
+    source: <span class="hljs-keyword">new</span> ol.source.TileWMS({
+        url: <span class="hljs-string">'http://osgis.astun.co.uk/geoserver/gwc/service/wms?'</span>,
         params: {
-            <span class="hljs-string">'LAYERS'</span>: <span class="hljs-string">'osgb:district_borough_unitary_region'</span>
+            <span class="hljs-string">'LAYERS'</span>: <span class="hljs-string">'osgb:district_borough_unitary_region'</span>,
+            <span class="hljs-string">'VERSION'</span>: <span class="hljs-string">'1.1.1'</span>,
+            <span class="hljs-string">'FORMAT'</span>: <span class="hljs-string">'image/png'</span>,
+            <span class="hljs-string">'TILED'</span>: <span class="hljs-literal">true</span>
         },
-        extent: extent
+        tileGrid: <span class="hljs-keyword">new</span> ol.tilegrid.TileGrid({
+            origin: extent.slice(<span class="hljs-number">0</span>, <span class="hljs-number">2</span>),
+            resolutions: resolutions
+        })
     })
 });
 map.addLayer(districtLayer);
