@@ -1,3 +1,5 @@
+// Define a Proj4Leaflet crs instance configured for British National Grid
+// (EPSG:27700) and the resolutions of our base map
 var crs = new L.Proj.CRS(
     'EPSG:27700',
     '+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +datum=OSGB36 +units=m +no_defs',
@@ -6,10 +8,10 @@ var crs = new L.Proj.CRS(
     }
 );
 
+// Define a standard Leaflet map specifying our crs instance and define a WMS
+// base map
 var map = new L.Map('map', {
     crs: crs,
-    continuousWorld: true,
-    worldCopyJump: false,
     layers: [
         L.tileLayer.wms('http://t0.ads.astuntechnology.com/open/osopen/service', {
             layers: 'osopen',
@@ -23,21 +25,32 @@ var map = new L.Map('map', {
 
 map.setView([52.5, -1.8], 0);
 
+// -- GeoJSON layer --
+
+// Make a request for GeoJSON features, and add them to a layer using the
+// default marker style and zoom to their extent
 reqwest({
-    url: 'http://hub-dev.astun.co.uk/developmentcontrol/0.1/applications/search?status=live&gsscode=E07000214&status=live',
+    url: 'http://hub-dev.astun.co.uk/developmentcontrol/0.1/applications/search?&gsscode=E07000214&status=live',
     type: 'json',
 }).then(function (data) {
-    var geojson = L.Proj.geoJson(data, {
-        onEachFeature: function (feature, layer) {
-            layer.bindPopup(L.Util.template('<h2><a href="{caseurl}">{casereference}</a></h2><p>{locationtext}</p><p>Status: {status} {statusdesc}</p>', feature.properties));
+    var planningAppsLayer = L.geoJson(data, {
+        // Define a function that will be called once for each feature that is
+        // added to the GeoJSON layer. Here we define a popup for each feature
+        onEachFeature: function (feature, marker) {
+            var tmplt = '<h2><a href="{caseurl}">{casereference}</a></h2>';
+                tmplt += '<p>{locationtext}</p><p>Status: {status} {statusdesc}</p>';
+            marker.bindPopup(L.Util.template(tmplt, feature.properties));
         }
     }).addTo(map);
     // Zoom to the extent of all features
-    map.fitBounds(geojson.getBounds());
+    map.fitBounds(planningAppsLayer.getBounds());
 });
 
-var planningAppsLayer = L.tileLayer.wms('http://osgis.astun.co.uk/geoserver/osgb/wms?', {
+// -- Load GB disticts as a WMS layer --
+
+var districtLayer = L.tileLayer.wms('http://osgis.astun.co.uk/geoserver/gwc/service/wms?', {
     layers: 'osgb:district_borough_unitary_region',
+    tiled: true,
     format: 'image/png',
     transparent: true,
     maxZoom: 14,
@@ -45,9 +58,23 @@ var planningAppsLayer = L.tileLayer.wms('http://osgis.astun.co.uk/geoserver/osgb
     continuousWorld: true
 }).addTo(map);
 
+// -- Display information on click --
+
+// Add an event handler for the map "click" event
 map.on('click', function(e) {
-    var url = getFeatureInfoUrl(map, planningAppsLayer, e.latlng, {'info_format': 'application/json', 'propertyName': 'NAME,AREA_CODE,DESCRIPTIO'});
-    console.log(url);
+
+    // Build the URL for a GetFeatureInfo
+    var url = getFeatureInfoUrl(
+                    map,
+                    districtLayer,
+                    e.latlng,
+                    {
+                        'info_format': 'application/json',
+                        'propertyName': 'NAME,AREA_CODE,DESCRIPTIO'
+                    }
+                );
+
+    // Send the request and create a popup showing the response
     reqwest({
         url: url,
         type: 'json',
@@ -58,8 +85,14 @@ map.on('click', function(e) {
         .setContent(L.Util.template("<h2>{NAME}</h2><p>{DESCRIPTIO}</p>", feature.properties))
         .openOn(map);
     });
+
 });
 
+/**
+ * Return the WMS GetFeatureInfo URL for the passed map, layer and coordinate.
+ * Specific parameters can be passed as params which will override the
+ * calculated parameters of the same name.
+ */
 function getFeatureInfoUrl(map, layer, latlng, params) {
 
     var point = map.latLngToContainerPoint(latlng, map.getZoom()),
