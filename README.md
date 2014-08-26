@@ -2,6 +2,8 @@
 
 A hands on introduction to using [OpenLayer 3 (OL3)](http://ol3js.org) and [Leaflet](http://leafletjs.com) to display spatial data on the web. The workshop will introduce the two libraries, the underpinning concepts and strengths of each, and take delegates through creating a series of examples.
 
+Documentation: [http://astuntechnology.github.io/osgis-ol3-leaflet/](http://astuntechnology.github.io/osgis-ol3-leaflet/)
+
 ## What we will build
 
 The workshop walks through building the same simple web mapping application first using OpenLayers 3 and then with Leaflet. The steps break down as follows:
@@ -34,8 +36,22 @@ Now you're ready to [start building an OpenLayers 3 map](ol3/README.md).
 
 * Leaflet docs
 * Set up another demo WMS layer
+* Consider adding Canvas example as suggested by @acanimal
+* Script setup of OSGeo-Live DVD
+    * Set up proxy
+    * Upgrade Firefox
+    * Install Gedit
 
 ## Extra credit
 
 * Style markers based on an attribute value
 * Add additional WMS layer
+
+## License
+
+This work is licensed under the Creative Commons Attribution 4.0 International
+License. To view a copy of this license, visit
+http://creativecommons.org/licenses/by/4.0/.
+
+Third-party libraries bundled with this repository for convenience such as
+OpenLayers 3, Leaflet, reqwest etc. retain their original license.
