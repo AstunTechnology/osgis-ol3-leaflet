@@ -22,6 +22,16 @@ Completed versions can be seen here:
 
 ## Getting started
 
+### OSGIS 2014 Workshop Quickstart
+
+The [OSGIS 2014](http://www.nottingham.ac.uk/osgis/home.aspx) Workshop used the [OSGeo Live DVD](http://live.osgeo.org/en/). To get setup do the following:
+
+* Dismiss the Welcome and Upgrade prompts
+* In Firefox (Applications > Web Browser) navigate to [http://is.gd/osgis2014](http://is.gd/osgis2014)
+* Copy and paste the commands at [http://is.gd/osgis2014](http://is.gd/osgis2014) into a Terminal (Applications > Accessories > Terminal Emulator) and hit return
+
+The commands set the keyboard layout to GB, installs `git` and `gedit` (a slightly better text editor) then clones the repository and changes you into it's root. Now you're ready to [start building an OpenLayers 3 map](ol3/README.md).
+
 ### Get a copy of the repository
 
 First clone or download (and unzip) [the repository from GitHub](https://github.com/AstunTechnology/osgis-ol3-leaflet) to a suitable location on your local machine.
@@ -34,13 +44,8 @@ Now you're ready to [start building an OpenLayers 3 map](ol3/README.md).
 
 ## Todo
 
-* Leaflet docs
 * Set up another demo WMS layer
 * Consider adding Canvas example as suggested by @acanimal
-* Script setup of OSGeo-Live DVD
-    * Set up proxy
-    * Upgrade Firefox
-    * Install Gedit
 
 ## Extra credit
 
