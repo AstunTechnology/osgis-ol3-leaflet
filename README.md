@@ -28,17 +28,9 @@ The [OSGIS 2014](http://www.nottingham.ac.uk/osgis/home.aspx) Workshop used the 
 
 * Dismiss the Welcome and Upgrade prompts
 * In Firefox (Applications > Web Browser) navigate to [http://is.gd/osgis2014](http://is.gd/osgis2014)
-* Copy and paste the commands at [http://is.gd/osgis2014](http://is.gd/osgis2014) into a Terminal (Applications > Accessories > Terminal Emulator) and hit return
+* Copy and paste the commands displayed in your browser into a Terminal (Applications > Accessories > Terminal Emulator) and hit return
 
 The commands set the keyboard layout to GB, installs `git` and `gedit` (a slightly better text editor) then clones the repository and changes you into it's root. Now you're ready to [start building an OpenLayers 3 map](ol3/README.md).
-
-### Get a copy of the repository
-
-First clone or download (and unzip) [the repository from GitHub](https://github.com/AstunTechnology/osgis-ol3-leaflet) to a suitable location on your local machine.
-
-    git clone https://github.com/AstunTechnology/osgis-ol3-leaflet.git
-
-Now you're ready to [start building an OpenLayers 3 map](ol3/README.md).
 
 ----
 
