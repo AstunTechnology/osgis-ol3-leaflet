@@ -2,7 +2,7 @@
 
 Getting information for a WMS layer is a bit more involved due to Leaflet not providing an out of the box way of determining the URL for a WMS GetFeatureInfo request. This example defines a `getFeatureInfoUrl` function derived from [this gist](https://gist.github.com/rclark/6908938#file-l-tilelayer-betterwms-js-L33).
 
-Add the following to `leaflet.js`:
+Add the following **to the bottom** of `leaflet.js`:
 
 ```javascript
 // -- Display information on click --
@@ -78,3 +78,5 @@ function getFeatureInfoUrl(map, layer, latlng, params) {
 ### All done!
 
 At this point you should have a working Leaflet web map. Visit the [Leaflet website](http://leafletjs.com) where you will find excellent documentation including a [comprehensive list of plugins](http://leafletjs.com/plugins.html).
+
+If you're still looking to do more try the [Extra Credit suggestions](../README.md#extra-credit).
