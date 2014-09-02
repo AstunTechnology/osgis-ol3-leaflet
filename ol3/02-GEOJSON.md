@@ -6,7 +6,7 @@ OpenLayers has the concept of a format to read data, a source to manage loading 
 
 Here we are creating a [`ol.source.GeoJSON`](http://ol3js.org/en/master/apidoc/ol.source.GeoJSON.html) source which loads the data and uses the [`ol.format.GeoJSON`](http://ol3js.org/en/master/apidoc/ol.format.GeoJSON.html) format to read the features. An [`ol.layer.Vector`](http://ol3js.org/en/master/apidoc/ol.layer.Vector.html) layer is then used to display the features using the specified style.
 
-Add the following to be bottom of `ol3.js`:
+Add the following **to the bottom** of `ol3.js`:
 
 ```javascript
 // -- GeoJSON layer --
