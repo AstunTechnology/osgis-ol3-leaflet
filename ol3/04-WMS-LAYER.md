@@ -4,7 +4,7 @@ Adding a WMS overlay layer in the same projection as the map is also fairly stra
 
 Here we are defining a cached tiled layer similar to our base map and again defining a `tileGrid` to ensure that the requests are for the appropriate resolutions (scales) and line up with the cache grid.
 
-Add the following *just above* where you added the code to add a GeoJSON layer (`// -- GeoJSON layer --`) a few steps back:
+Add the following **just above where you added the code to add a GeoJSON layer** (`// -- GeoJSON layer --`) a few steps back:
 
 ```javascript
 // -- Load GB disticts as a WMS layer --
