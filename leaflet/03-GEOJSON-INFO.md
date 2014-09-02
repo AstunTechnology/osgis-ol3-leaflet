@@ -2,7 +2,7 @@
 
 The simplest way to display a popup with information for each marker is to use the Marker's [`bindPopup`](http://leafletjs.com/reference.html#marker-bindpopup) method. The GeoJSON layer provides an [`onEachFeature`](http://leafletjs.com/reference.html#geojson-oneachfeature) option which will be called once per feature before it's added to the layer which we can use to call `bindPopup`.
 
-Replace the placeholder `// -- Layer options here --` with the following in `leaflet.js`:
+**Replace the placeholder** `// -- Layer options here --` with the following in `leaflet.js`:
 
 ```javascript
         // Define a function that will be called once for each feature that is
