@@ -33,7 +33,7 @@
 
 
         
-    <div class="book"  data-level="1.6" data-basepath=".." data-revision="1409572053806">
+    <div class="book"  data-level="1.6" data-basepath=".." data-revision="1409649460465">
     
 
 <div class="book-summary">
@@ -393,7 +393,7 @@
                     
                         <h2 id="info-for-wms-layer">Info for WMS layer</h2>
 <p>In order to display information for the WMS layer we need to make a <code>GetFeatureInfo</code> request to the WMS server. OL3 provides a <a href="http://ol3js.org/en/master/apidoc/ol.source.ImageWMS.html#getGetFeatureInfoUrl" target="_blank"><code>getGetFeatureInfoUrl</code></a> function to build the URL which we then make a request to using the <a href="https://github.com/ded/reqwest" target="_blank">reqwest library</a>.</p>
-<p>Update <code>ol3.js</code> replacing the existing event handler for the map &quot;click&quot; event with the following which sends a GetFeatureInfo request if the click was not over a marker and hence no feature is found:</p>
+<p>Update <code>ol3.js</code> <strong>replacing the existing event handler for the map &quot;click&quot; event</strong> with the following which sends a GetFeatureInfo request if the click was not over a marker and hence no feature is found:</p>
 <pre><code class="lang-javascript"><span class="hljs-comment">// Add an event handler for the map "click" event</span>
 map.on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(evt)</span> </span>{
 

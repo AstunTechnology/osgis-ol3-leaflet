@@ -33,7 +33,7 @@
 
 
         
-    <div class="book"  data-level="2.5" data-basepath=".." data-revision="1409572053806">
+    <div class="book"  data-level="2.5" data-basepath=".." data-revision="1409649460465">
     
 
 <div class="book-summary">
@@ -389,12 +389,12 @@
                 <div class="page-inner">
                 
                 
-                    <section class="normal" id="section-gitbook_6">
+                    <section class="normal" id="section-gitbook_7">
                     
                         <h2 id="wms-layer">WMS layer</h2>
 <p>Adding a WMS overlay layer in the same projection as the map is again straightforward as Leaflet provides a <a href="http://leafletjs.com/reference.html#tilelayer-wms" target="_blank">tiled WMS layer</a>.</p>
 <p>We are adding the same local authority district layer from <a href="http://geoserver.org/" target="_blank">GeoServer</a> as with the <a href="../ol3/04-WMS-LAYER.html">OL3 example</a>.</p>
-<p>Add the following to the bottom of <code>leaflet.js</code>:</p>
+<p>Add the following <strong>to the bottom</strong> of <code>leaflet.js</code>:</p>
 <pre><code class="lang-javascript"><span class="hljs-comment">// -- Load GB disticts as a WMS layer --</span>
 
 <span class="hljs-keyword">var</span> districtLayer = L.tileLayer.wms(<span class="hljs-string">'http://osgis.astun.co.uk/geoserver/gwc/service/wms?'</span>, {

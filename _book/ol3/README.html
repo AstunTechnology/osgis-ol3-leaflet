@@ -33,7 +33,7 @@
 
 
         
-    <div class="book"  data-level="1" data-basepath=".." data-revision="1409572053806">
+    <div class="book"  data-level="1" data-basepath=".." data-revision="1409649460465">
     
 
 <div class="book-summary">
@@ -400,9 +400,17 @@ a focus on performance and mobile support while retaining the wide format
 support and rich GIS functionality.</p>
 <h2 id="get-started">Get started</h2>
 <h3 id="start-a-local-webserver">Start a local webserver</h3>
-<p>Assuming you have a local copy of the repository you can start a local Python webserver by changing to the root of the repository in a command prompt and running:</p>
-<pre><code>python -m SimpleHTTPServer
-</code></pre><p>Navigating to <a href="http://localhost:8000/ol3/ol3.html" target="_blank">http://localhost:8000/ol3/ol3.html</a> you should see a blank map ready for us to get started.</p>
+<p>Assuming you have a local copy of the repository, start a local Python webserver by</p>
+<ul>
+<li><p>In a Terminal (Applications &gt; Accessories &gt; Terminal Emulator) change to the root of the repository. Assuming the repository is in your home directory run:</p>
+<pre><code>  cd ~/osgis-ol3-leaflet
+</code></pre></li>
+<li><p>To start the web server run:</p>
+<pre><code>  python -m SimpleHTTPServer
+</code></pre></li>
+<li><p>Open <a href="http://localhost:8000/ol3/ol3.html" target="_blank">http://localhost:8000/ol3/ol3.html</a> in a Web Browser where you should see a blank map ready for us to get started.</p>
+</li>
+</ul>
 <h3 id="editing-files">Editing files</h3>
 <p>To get started coding open <code>ol3/ol3.js</code> in a text editor then move on to building a <a href="00-OSM-MAP.html">basic map with OSM tiles</a>. The other supporting files include:</p>
 <h4 id="html">HTML</h4>
@@ -442,6 +450,7 @@ support and rich GIS functionality.</p>
   <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
 <span class="hljs-rule">}</span></span>
 </code></pre>
+<p>Next step: build a <a href="00-OSM-MAP.html">basic map with OSM tiles</a>.</p>
 
                     
                     </section>

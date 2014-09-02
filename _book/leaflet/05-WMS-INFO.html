@@ -31,7 +31,7 @@
 
 
         
-    <div class="book"  data-level="2.6" data-basepath=".." data-revision="1409572053806">
+    <div class="book"  data-level="2.6" data-basepath=".." data-revision="1409649460465">
     
 
 <div class="book-summary">
@@ -387,11 +387,11 @@
                 <div class="page-inner">
                 
                 
-                    <section class="normal" id="section-gitbook_7">
+                    <section class="normal" id="section-gitbook_8">
                     
                         <h2 id="info-for-wms-layer">Info for WMS layer</h2>
 <p>Getting information for a WMS layer is a bit more involved due to Leaflet not providing an out of the box way of determining the URL for a WMS GetFeatureInfo request. This example defines a <code>getFeatureInfoUrl</code> function derived from <a href="https://gist.github.com/rclark/6908938#file-l-tilelayer-betterwms-js-L33" target="_blank">this gist</a>.</p>
-<p>Add the following to <code>leaflet.js</code>:</p>
+<p>Add the following <strong>to the bottom</strong> of <code>leaflet.js</code>:</p>
 <pre><code class="lang-javascript"><span class="hljs-comment">// -- Display information on click --</span>
 
 <span class="hljs-comment">// Add an event handler for the map "click" event</span>
@@ -463,6 +463,7 @@ map.on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><sp
 </code></pre>
 <h3 id="all-done">All done!</h3>
 <p>At this point you should have a working Leaflet web map. Visit the <a href="http://leafletjs.com" target="_blank">Leaflet website</a> where you will find excellent documentation including a <a href="http://leafletjs.com/plugins.html" target="_blank">comprehensive list of plugins</a>.</p>
+<p>If you&#39;re still looking to do more try the <a href="../README.html#extra-credit">Extra Credit suggestions</a>.</p>
 
                     
                     </section>

@@ -33,7 +33,7 @@
 
 
         
-    <div class="book"  data-level="1.3" data-basepath=".." data-revision="1409572053806">
+    <div class="book"  data-level="1.3" data-basepath=".." data-revision="1409649460465">
     
 
 <div class="book-summary">
@@ -395,7 +395,7 @@
 <p>Loading GeoJSON features returned from an API call is fairly straight forward even when the GeoJSON features are in WGS84 and your map is in British National Grid.</p>
 <p>OpenLayers has the concept of a format to read data, a source to manage loading data and a layer to display it.</p>
 <p>Here we are creating a <a href="http://ol3js.org/en/master/apidoc/ol.source.GeoJSON.html" target="_blank"><code>ol.source.GeoJSON</code></a> source which loads the data and uses the <a href="http://ol3js.org/en/master/apidoc/ol.format.GeoJSON.html" target="_blank"><code>ol.format.GeoJSON</code></a> format to read the features. An <a href="http://ol3js.org/en/master/apidoc/ol.layer.Vector.html" target="_blank"><code>ol.layer.Vector</code></a> layer is then used to display the features using the specified style.</p>
-<p>Add the following to be bottom of <code>ol3.js</code>:</p>
+<p>Add the following <strong>to the bottom</strong> of <code>ol3.js</code>:</p>
 <pre><code class="lang-javascript"><span class="hljs-comment">// -- GeoJSON layer --</span>
 
 <span class="hljs-comment">// Define a GeoJSON source that will load features via a http call. By</span>
