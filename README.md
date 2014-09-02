@@ -42,7 +42,12 @@ The commands set the keyboard layout to GB, installs `git` and `gedit` (a slight
 ## Extra credit
 
 * Style markers based on an attribute value
-* Add additional WMS layer
+* Add additional WMS layer (the WMS server used in the workshop also has a `osgb:county_region` layer)
+
+### Resources
+
+* [OpenLayers 3 website](http://ol3js.org) and [API docs](http://ol3js.org/en/master/apidoc/)
+* [Leaflet website](http://leafletjs.com) and [API docs](http://leafletjs.com/reference.html)
 
 ## License
 
