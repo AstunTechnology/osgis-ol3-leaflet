@@ -2,7 +2,7 @@
 
 Displaying information associated with a marker requires a popup overlay and an event handler that finds the closest marker and displays the popup showing the associated features information.
 
-Again add the following to be bottom of `ol3.js`:
+Again add the following **to the bottom** of `ol3.js`:
 
 ```javascript
 // -- Display information on click --
