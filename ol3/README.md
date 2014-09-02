@@ -14,11 +14,11 @@ Assuming you have a local copy of the repository, start a local Python webserver
 
 * In a Terminal (Applications > Accessories > Terminal Emulator) change to the root of the repository. Assuming the repository is in your home directory run:
 
-    cd ~/osgis-ol3-leaflet
+        cd ~/osgis-ol3-leaflet
 
 * To start the web server run:
 
-    python -m SimpleHTTPServer
+        python -m SimpleHTTPServer
 
 * Open [http://localhost:8000/ol3/ol3.html](http://localhost:8000/ol3/ol3.html) in a Web Browser where you should see a blank map ready for us to get started.
 
@@ -70,3 +70,5 @@ html, body {
   height: 100%;
 }
 ```
+
+Next step: build a [basic map with OSM tiles](00-OSM-MAP.md).
