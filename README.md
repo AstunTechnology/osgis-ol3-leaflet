@@ -34,11 +34,6 @@ The commands set the keyboard layout to GB, installs `git` and `gedit` (a slight
 
 ----
 
-## Todo
-
-* Set up another demo WMS layer
-* Consider adding Canvas example as suggested by @acanimal
-
 ## Extra credit
 
 * Style markers based on an attribute value
@@ -57,3 +52,7 @@ http://creativecommons.org/licenses/by/4.0/.
 
 Third-party libraries bundled with this repository for convenience such as
 OpenLayers 3, Leaflet, reqwest etc. retain their original license.
+
+## Todo
+
+* Consider adding Canvas example as suggested by @acanimal
