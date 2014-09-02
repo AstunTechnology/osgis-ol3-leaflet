@@ -17,6 +17,8 @@ var map = new ol.Map({
 });
 ```
 
+Save the file and refresh the page in your browser (F5).
+
 ### Notes
 
 #### Projection
