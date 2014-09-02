@@ -10,11 +10,17 @@ support and rich GIS functionality.
 
 ### Start a local webserver
 
-Assuming you have a local copy of the repository you can start a local Python webserver by changing to the root of the repository in a command prompt and running:
+Assuming you have a local copy of the repository, start a local Python webserver by
+
+* In a Terminal (Applications > Accessories > Terminal Emulator) change to the root of the repository. Assuming the repository is in your home directory run:
+
+    cd ~/osgis-ol3-leaflet
+
+* To start the web server run:
 
     python -m SimpleHTTPServer
 
-Navigating to [http://localhost:8000/ol3/ol3.html](http://localhost:8000/ol3/ol3.html) you should see a blank map ready for us to get started.
+* Open [http://localhost:8000/ol3/ol3.html](http://localhost:8000/ol3/ol3.html) in a Web Browser where you should see a blank map ready for us to get started.
 
 ### Editing files
 
