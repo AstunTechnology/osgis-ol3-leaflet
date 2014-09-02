@@ -59,3 +59,5 @@ html, body {
   height: 100%;
 }
 ```
+
+Next step: build a [basic map with OSM tiles](00-OSM-MAP.md).

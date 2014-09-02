@@ -79,4 +79,4 @@ function getFeatureInfoUrl(map, layer, latlng, params) {
 
 At this point you should have a working Leaflet web map. Visit the [Leaflet website](http://leafletjs.com) where you will find excellent documentation including a [comprehensive list of plugins](http://leafletjs.com/plugins.html).
 
-If you're still looking to do more try the [Extra Credit suggestions](../README.md#extra-credit).
+If you're still looking to do more try the [Extra Credit suggestions](../#extra-credit).
