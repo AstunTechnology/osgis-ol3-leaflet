@@ -4,7 +4,7 @@ Adding a WMS overlay layer in the same projection as the map is again straightfo
 
 We are adding the same local authority district layer from [GeoServer](http://geoserver.org/) as with the [OL3 example](../ol3/04-WMS-LAYER.md).
 
-Add the following to the bottom of `leaflet.js`:
+Add the following **to the bottom** of `leaflet.js`:
 
 ```javascript
 // -- Load GB disticts as a WMS layer --
