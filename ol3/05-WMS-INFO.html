@@ -4,7 +4,7 @@
     <head>
         
         <meta charset="UTF-8">
-        <title>Info for GeoJSON layer | Practical OpenLayers 3 &amp; Leaflet</title>
+        <title>Info for WMS layer | Practical OpenLayers 3 &amp; Leaflet</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 1.0.0">
@@ -18,10 +18,10 @@
     
     
     
-    <link rel="next" href="../ol3/04-WMS-LAYER.html" />
+    <link rel="next" href="../leaflet/README.html" />
     
     
-    <link rel="prev" href="../ol3/02-GEOJSON.html" />
+    <link rel="prev" href="../ol3/04-WMS-LAYER.html" />
     
 
         
@@ -33,7 +33,7 @@
 
 
         
-    <div class="book"  data-level="1.4" data-basepath=".." data-revision="1409673984869">
+    <div class="book"  data-level="1.6" data-basepath=".." data-revision="1410535817023">
     
 
 <div class="book-summary">
@@ -130,7 +130,7 @@
         </li>
     
         
-        <li class="chapter active" data-level="1.4" data-path="ol3/03-GEOJSON-INFO.html">
+        <li class="chapter " data-level="1.4" data-path="ol3/03-GEOJSON-INFO.html">
             
                 
                     <a href="../ol3/03-GEOJSON-INFO.html">
@@ -162,7 +162,7 @@
         </li>
     
         
-        <li class="chapter " data-level="1.6" data-path="ol3/05-WMS-INFO.html">
+        <li class="chapter active" data-level="1.6" data-path="ol3/05-WMS-INFO.html">
             
                 
                     <a href="../ol3/05-WMS-INFO.html">
@@ -389,25 +389,19 @@
                 <div class="page-inner">
                 
                 
-                    <section class="normal" id="section-gitbook_12">
+                    <section class="normal" id="section-gitbook_30">
                     
-                        <h2 id="info-for-geojson-layer">Info for GeoJSON layer</h2>
-<p>Displaying information associated with a marker requires a popup overlay and an event handler that finds the closest marker and displays the popup showing the associated features information.</p>
-<p>Again add the following <strong>to the bottom</strong> of <code>ol3.js</code>:</p>
-<pre><code class="lang-javascript"><span class="hljs-comment">// -- Display information on click --</span>
-
-<span class="hljs-comment">// Create a popup overlay which will be used to display feature info</span>
-<span class="hljs-keyword">var</span> popup = <span class="hljs-keyword">new</span> ol.Popup();
-map.addOverlay(popup);
-
-<span class="hljs-comment">// Add an event handler for the map "click" event</span>
+                        <h2 id="info-for-wms-layer">Info for WMS layer</h2>
+<p>In order to display information for the WMS layer we need to make a <code>GetFeatureInfo</code> request to the WMS server. OL3 provides a <a href="http://ol3js.org/en/master/apidoc/ol.source.ImageWMS.html#getGetFeatureInfoUrl" target="_blank"><code>getGetFeatureInfoUrl</code></a> function to build the URL which we then make a request to using the <a href="https://github.com/ded/reqwest" target="_blank">reqwest library</a>.</p>
+<p>Update <code>ol3.js</code> <strong>replacing the existing event handler for the map &quot;click&quot; event</strong> with the following which sends a GetFeatureInfo request if the click was not over a marker and hence no feature is found:</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// Add an event handler for the map "click" event</span>
 map.on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(evt)</span> </span>{
 
     <span class="hljs-comment">// Hide existing popup and reset it's class</span>
     popup.hide();
     popup.container.className = <span class="hljs-string">'ol-popup'</span>;
 
-    <span class="hljs-comment">// Attempt to find a feature in one of the visible vector layers</span>
+    <span class="hljs-comment">// Attempt to find a marker from the planningAppsLayer</span>
     <span class="hljs-keyword">var</span> feature = map.forEachFeatureAtPixel(evt.pixel, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(feature, layer)</span> </span>{
         <span class="hljs-keyword">return</span> feature;
     });
@@ -422,13 +416,38 @@ map.on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><sp
         popup.container.className = <span class="hljs-string">'ol-popup marker'</span>;
         popup.show(coord, info);
 
+    } <span class="hljs-keyword">else</span> {
+
+        <span class="hljs-keyword">var</span> url = districtLayer
+                    .getSource()
+                    .getGetFeatureInfoUrl(
+                        evt.coordinate,
+                        map.getView().getResolution(),
+                        map.getView().getProjection(),
+                        {
+                            <span class="hljs-string">'INFO_FORMAT'</span>: <span class="hljs-string">'application/json'</span>,
+                            <span class="hljs-string">'propertyName'</span>: <span class="hljs-string">'NAME,AREA_CODE,DESCRIPTIO'</span>
+                        }
+                    );
+
+        reqwest({
+            url: url,
+            type: <span class="hljs-string">'json'</span>,
+        }).then(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> </span>{
+            <span class="hljs-keyword">var</span> feature = data.features[<span class="hljs-number">0</span>];
+            <span class="hljs-keyword">var</span> props = feature.properties;
+            <span class="hljs-keyword">var</span> info = <span class="hljs-string">"&lt;h2&gt;"</span> + props.NAME + <span class="hljs-string">"&lt;/h2&gt;&lt;p&gt;"</span> + props.DESCRIPTIO + <span class="hljs-string">"&lt;/p&gt;"</span>;
+            popup.show(evt.coordinate, info);
+        });
+
     }
 
 });
 </code></pre>
-<h3 id="notes">Notes</h3>
-<h4 id="popup">Popup</h4>
-<p>OpenLayers 3 doesn&#39;t currently provide a popup so we are using one based on an example provided by Tim Schaub one of the OL3 core team. The popup is simply a positioned HTML element which is added to the map as an overlay which is fixed to a geographic coordinate.</p>
+<h3 id="all-done">All done!</h3>
+<p>At this point you should have a working OpenLayers 3 web map client. Visit the <a href="http://ol3js.org" target="_blank">OpenLayers 3 website</a> and <a href="http://ol3js.org/en/master/apidoc/" target="_blank">API docs</a> for more information and to keep building.</p>
+<h3 id="whats-next">What&#39;s next?</h3>
+<p><a href="../leaflet/README.html">Try building the same using Leaflet</a>.</p>
 
                     
                     </section>
@@ -439,10 +458,10 @@ map.on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><sp
         </div>
 
         
-        <a href="../ol3/02-GEOJSON.html" class="navigation navigation-prev " aria-label="Previous page: GeoJSON layer with markers"><i class="fa fa-angle-left"></i></a>
+        <a href="../ol3/04-WMS-LAYER.html" class="navigation navigation-prev " aria-label="Previous page: WMS layer"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="../ol3/04-WMS-LAYER.html" class="navigation navigation-next " aria-label="Next page: WMS layer"><i class="fa fa-angle-right"></i></a>
+        <a href="../leaflet/README.html" class="navigation navigation-next " aria-label="Next page: Leaflet"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>
@@ -456,6 +475,10 @@ map.on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><sp
 
     
     <script src="../gitbook/plugins/gitbook-plugin-mathjax/plugin.js"></script>
+    
+
+    
+    <script src="../gitbook/plugins/gitbook-plugin-livereload/plugin.js"></script>
     
 
 <script>

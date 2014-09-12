@@ -4,7 +4,7 @@
     <head>
         
         <meta charset="UTF-8">
-        <title>GeoJSON layer with markers | Practical OpenLayers 3 &amp; Leaflet</title>
+        <title>OpenLayers 3 | Practical OpenLayers 3 &amp; Leaflet</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 1.0.0">
@@ -18,10 +18,10 @@
     
     
     
-    <link rel="next" href="../ol3/03-GEOJSON-INFO.html" />
+    <link rel="next" href="../ol3/00-OSM-MAP.html" />
     
     
-    <link rel="prev" href="../ol3/01-OSGB-MAP.html" />
+    <link rel="prev" href="../index.html" />
     
 
         
@@ -33,7 +33,7 @@
 
 
         
-    <div class="book"  data-level="1.3" data-basepath=".." data-revision="1409673984869">
+    <div class="book"  data-level="1" data-basepath=".." data-revision="1410535817023">
     
 
 <div class="book-summary">
@@ -65,7 +65,7 @@
         </li>
     
         
-        <li class="chapter " data-level="1" data-path="ol3/README.html">
+        <li class="chapter active" data-level="1" data-path="ol3/README.html">
             
                 
                     <a href="../ol3/README.html">
@@ -114,7 +114,7 @@
         </li>
     
         
-        <li class="chapter active" data-level="1.3" data-path="ol3/02-GEOJSON.html">
+        <li class="chapter " data-level="1.3" data-path="ol3/02-GEOJSON.html">
             
                 
                     <a href="../ol3/02-GEOJSON.html">
@@ -389,49 +389,68 @@
                 <div class="page-inner">
                 
                 
-                    <section class="normal" id="section-gitbook_11">
+                    <section class="normal" id="section-gitbook_31">
                     
-                        <h2 id="geojson-layer-with-markers">GeoJSON layer with markers</h2>
-<p>Loading GeoJSON features returned from an API call is fairly straight forward even when the GeoJSON features are in WGS84 and your map is in British National Grid.</p>
-<p>OpenLayers has the concept of a format to read data, a source to manage loading data and a layer to display it.</p>
-<p>Here we are creating a <a href="http://ol3js.org/en/master/apidoc/ol.source.GeoJSON.html" target="_blank"><code>ol.source.GeoJSON</code></a> source which loads the data and uses the <a href="http://ol3js.org/en/master/apidoc/ol.format.GeoJSON.html" target="_blank"><code>ol.format.GeoJSON</code></a> format to read the features. An <a href="http://ol3js.org/en/master/apidoc/ol.layer.Vector.html" target="_blank"><code>ol.layer.Vector</code></a> layer is then used to display the features using the specified style.</p>
-<p>Add the following <strong>to the bottom</strong> of <code>ol3.js</code>:</p>
-<pre><code class="lang-javascript"><span class="hljs-comment">// -- GeoJSON layer --</span>
-
-<span class="hljs-comment">// Define a GeoJSON source that will load features via a http call. By</span>
-<span class="hljs-comment">// specifying the projection of the map's view OL3 will transform the coordinates</span>
-<span class="hljs-comment">// for display</span>
-<span class="hljs-keyword">var</span> planningAppsSource = <span class="hljs-keyword">new</span> ol.source.GeoJSON({
-    <span class="hljs-string">'projection'</span>: map.getView().getProjection(),
-    <span class="hljs-string">'url'</span>: <span class="hljs-string">'http://hub-dev.astun.co.uk/developmentcontrol/0.1/applications/search?status=live&amp;gsscode=E07000214'</span>
-});
-
-<span class="hljs-comment">// Create a vector layer to display the features within the GeoJSON source and</span>
-<span class="hljs-comment">// applies a simple icon style to all features</span>
-<span class="hljs-keyword">var</span> planningAppsLayer = <span class="hljs-keyword">new</span> ol.layer.Vector({
-    source: planningAppsSource,
-    style: <span class="hljs-keyword">new</span> ol.style.Style({
-        image: <span class="hljs-keyword">new</span> ol.style.Icon(({
-            anchor: [<span class="hljs-number">0.5</span>, <span class="hljs-number">40</span>],
-            anchorXUnits: <span class="hljs-string">'fraction'</span>,
-            anchorYUnits: <span class="hljs-string">'pixels'</span>,
-            src: <span class="hljs-string">'marker-icon.png'</span>
-        }))
-    })
-});
-
-<span class="hljs-comment">// Add the layer to the map</span>
-map.addLayer(planningAppsLayer);
-
-<span class="hljs-comment">// Once the change event of the source occurs and the source is 'ready' zoom to</span>
-<span class="hljs-comment">// the extent of the features</span>
-planningAppsSource.on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(evt)</span> </span>{
-    <span class="hljs-keyword">var</span> src = evt.target;
-    <span class="hljs-keyword">if</span> (src.getState() === <span class="hljs-string">'ready'</span>) {
-        map.getView().fitExtent(src.getExtent(), map.getSize());
-    }
-});
+                        <h1 id="openlayers-3">OpenLayers 3</h1>
+<blockquote>
+<p>A high-performance, feature-packed library for all your mapping needs. - <a href="http://ol3js.org/" target="_blank">ol3js.org</a></p>
+</blockquote>
+<p>The next version of the widely used OpenLayer library, a ground up rewrite with
+a focus on performance and mobile support while retaining the wide format
+support and rich GIS functionality.</p>
+<h2 id="get-started">Get started</h2>
+<h3 id="start-a-local-webserver">Start a local webserver</h3>
+<p>Assuming you have a local copy of the repository, start a local Python webserver by</p>
+<ul>
+<li><p>In a Terminal (Applications &gt; Accessories &gt; Terminal Emulator) change to the root of the repository. Assuming the repository is in your home directory run:</p>
+<pre><code>  cd ~/osgis-ol3-leaflet
+</code></pre></li>
+<li><p>To start the web server run:</p>
+<pre><code>  python -m SimpleHTTPServer
+</code></pre></li>
+<li><p>Open <a href="http://localhost:8000/ol3/ol3.html" target="_blank">http://localhost:8000/ol3/ol3.html</a> in a Web Browser where you should see a blank map ready for us to get started.</p>
+</li>
+</ul>
+<h3 id="editing-files">Editing files</h3>
+<p>To get started coding open <code>ol3/ol3.js</code> in a text editor then move on to building a <a href="00-OSM-MAP.html">basic map with OSM tiles</a>. The other supporting files include:</p>
+<h4 id="html">HTML</h4>
+<p>The HTML file <code>ol3.html</code> will remain the same throughout the workshop, it provides the basic page structure of a full page map and includes the required CSS and JavaScript including <code>ol3.js</code> which you will be working on.</p>
+<pre><code class="lang-html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>OpenLayers 3<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"viewport"</span> <span class="hljs-attribute">content</span>=<span class="hljs-value">"initial-scale=1.0, user-scalable=no, width=device-width"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"lib/ol3/ol.css"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"lib/ol-popup.css"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"ol3.css"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"map"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"../common/lib/reqwest.min.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"lib/proj4.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"lib/ol3/ol.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"lib/ol-popup.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"ol3.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
 </code></pre>
+<h4 id="css">CSS</h4>
+<p>The CSS file <code>ol3.css</code> will also remain unchanged, it defines some basic page style and ensures the map takes up the full page.</p>
+<pre><code class="lang-css"><span class="hljs-tag">html</span>, <span class="hljs-tag">body</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">font-family</span>:<span class="hljs-value"> sans-serif</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> small</span></span>;
+<span class="hljs-rule">}</span></span>
+
+<span class="hljs-id">#map</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
+<span class="hljs-rule">}</span></span>
+</code></pre>
+<p>Next step: build a <a href="00-OSM-MAP.html">basic map with OSM tiles</a>.</p>
 
                     
                     </section>
@@ -442,10 +461,10 @@ planningAppsSource.on(<span class="hljs-string">'change'</span>, <span class="hl
         </div>
 
         
-        <a href="../ol3/01-OSGB-MAP.html" class="navigation navigation-prev " aria-label="Previous page: OS-GB Map with Ordnance Survey tiles"><i class="fa fa-angle-left"></i></a>
+        <a href="../index.html" class="navigation navigation-prev " aria-label="Previous page: Introduction"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="../ol3/03-GEOJSON-INFO.html" class="navigation navigation-next " aria-label="Next page: Info for GeoJSON layer"><i class="fa fa-angle-right"></i></a>
+        <a href="../ol3/00-OSM-MAP.html" class="navigation navigation-next " aria-label="Next page: Basic map with OSM tiles"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>
@@ -459,6 +478,10 @@ planningAppsSource.on(<span class="hljs-string">'change'</span>, <span class="hl
 
     
     <script src="../gitbook/plugins/gitbook-plugin-mathjax/plugin.js"></script>
+    
+
+    
+    <script src="../gitbook/plugins/gitbook-plugin-livereload/plugin.js"></script>
     
 
 <script>

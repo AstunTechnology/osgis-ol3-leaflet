@@ -4,7 +4,7 @@
     <head>
         
         <meta charset="UTF-8">
-        <title>Basic map with OSM tiles | Practical OpenLayers 3 &amp; Leaflet</title>
+        <title>Leaflet | Practical OpenLayers 3 &amp; Leaflet</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 1.0.0">
@@ -18,10 +18,10 @@
     
     
     
-    <link rel="next" href="../leaflet/01-OSGB-MAP.html" />
+    <link rel="next" href="../leaflet/00-OSM-MAP.html" />
     
     
-    <link rel="prev" href="../leaflet/README.html" />
+    <link rel="prev" href="../ol3/05-WMS-INFO.html" />
     
 
         
@@ -33,7 +33,7 @@
 
 
         
-    <div class="book"  data-level="2.1" data-basepath=".." data-revision="1409673984869">
+    <div class="book"  data-level="2" data-basepath=".." data-revision="1410535817023">
     
 
 <div class="book-summary">
@@ -183,7 +183,7 @@
         </li>
     
         
-        <li class="chapter " data-level="2" data-path="leaflet/README.html">
+        <li class="chapter active" data-level="2" data-path="leaflet/README.html">
             
                 
                     <a href="../leaflet/README.html">
@@ -200,7 +200,7 @@
                 
     
         
-        <li class="chapter active" data-level="2.1" data-path="leaflet/00-OSM-MAP.html">
+        <li class="chapter " data-level="2.1" data-path="leaflet/00-OSM-MAP.html">
             
                 
                     <a href="../leaflet/00-OSM-MAP.html">
@@ -389,30 +389,56 @@
                 <div class="page-inner">
                 
                 
-                    <section class="normal" id="section-gitbook_4">
+                    <section class="normal" id="section-gitbook_19">
                     
-                        <h1 id="basic-map-with-osm-tiles">Basic map with OSM tiles</h1>
-<p>Edit <code>leaflet.js</code> so it looks as follows:</p>
-<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> map = <span class="hljs-keyword">new</span> L.Map(<span class="hljs-string">'map'</span>, {
-    layers: [
-        <span class="hljs-keyword">new</span> L.TileLayer(
-            <span class="hljs-string">'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'</span>,
-            {
-                attribution: <span class="hljs-string">'Map data © &lt;a href="http://openstreetmap.org"&gt;OpenStreetMap&lt;/a&gt; contributors'</span>
-            }
-        )
-    ]
-});
-
-map.setView([<span class="hljs-number">52.5</span>, -<span class="hljs-number">1.8</span>], <span class="hljs-number">6</span>);
-</code></pre>
-<h3 id="notes">Notes</h3>
-<h4 id="ltilelayer">L.TileLayer</h4>
-<p>Leaflet doesn&#39;t provide pre-built layer types for common base map providers like OpenLayers but Leaflet&#39;s creator Vladimir Agafonkin provides various examples here: <a href="https://gist.github.com/mourner/1804938" target="_blank">https://gist.github.com/mourner/1804938</a></p>
-<p>Details on the URL template from the Leaflet API docs:</p>
+                        <h1 id="leaflet">Leaflet</h1>
 <blockquote>
-<p>{s} means one of the available subdomains (used sequentially to help with browser parallel requests per domain limitation; subdomain values are specified in options; a, b or c by default, can be omitted), {z} — zoom level, {x} and {y} — tile coordinates.</p>
+<p>An Open-Source JavaScript Library for Mobile-Friendly Interactive Maps.</p>
+<p>Leaflet is designed with simplicity, performance and usability in mind. It works efficiently across all major desktop and mobile platforms out of the box, taking advantage of HTML5 and CSS3 on modern browsers while still being accessible on older ones. - <a href="http://leafletjs.com/" target="_blank">leafletjs.com</a></p>
 </blockquote>
+<h2 id="get-started">Get started</h2>
+<p>If you&#39;ve not already completed the <a href="../ol3/README.html">OpenLayers 3 exercise</a> then change to the root of the repository and start a local webserver:</p>
+<pre><code>python -m SimpleHTTPServer
+</code></pre><p>Navigating to <a href="http://localhost:8000/leaflet/leaflet.html" target="_blank">http://localhost:8000/leaflet/leaflet.html</a> you should see a blank map ready for us to get started.</p>
+<h3 id="editing-files">Editing files</h3>
+<p>To get started coding open <code>leaflet/leaflet.js</code> in a text editor then move on to building a <a href="00-OSM-MAP.html">basic map with OSM tiles</a>. The other supporting files include:</p>
+<h4 id="html">HTML</h4>
+<p>The HTML file <code>leaflet.html</code> will remain the same throughout the workshop, it provides the basic page structure of a full page map and includes the required CSS and JavaScript including <code>leaflet.js</code> which you will be working on.</p>
+<pre><code class="lang-html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Leaflet<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"viewport"</span> <span class="hljs-attribute">content</span>=<span class="hljs-value">"initial-scale=1.0, user-scalable=no, width=device-width"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"lib/leaflet-0.7.3/leaflet.css"</span> /&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"leaflet.css"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"map"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"../common/lib/reqwest.min.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"lib/leaflet-0.7.3/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"lib/proj4-compressed.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"lib/proj4leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+<h4 id="css">CSS</h4>
+<p>The CSS file <code>leaflet.css</code> will also remain unchanged, it defines some basic page style and ensures the map takes up the full page.</p>
+<pre><code class="lang-css"><span class="hljs-tag">html</span>, <span class="hljs-tag">body</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">font-family</span>:<span class="hljs-value"> sans-serif</span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> small</span></span>;
+<span class="hljs-rule">}</span></span>
+
+<span class="hljs-id">#map</span> <span class="hljs-rules">{
+  <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
+  <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
+<span class="hljs-rule">}</span></span>
+</code></pre>
+<p>Next step: build a <a href="00-OSM-MAP.html">basic map with OSM tiles</a>.</p>
 
                     
                     </section>
@@ -423,10 +449,10 @@ map.setView([<span class="hljs-number">52.5</span>, -<span class="hljs-number">1
         </div>
 
         
-        <a href="../leaflet/README.html" class="navigation navigation-prev " aria-label="Previous page: Leaflet"><i class="fa fa-angle-left"></i></a>
+        <a href="../ol3/05-WMS-INFO.html" class="navigation navigation-prev " aria-label="Previous page: Info for WMS layer"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="../leaflet/01-OSGB-MAP.html" class="navigation navigation-next " aria-label="Next page: OS-GB Map with Ordnance Survey tiles"><i class="fa fa-angle-right"></i></a>
+        <a href="../leaflet/00-OSM-MAP.html" class="navigation navigation-next " aria-label="Next page: Basic map with OSM tiles"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>
@@ -440,6 +466,10 @@ map.setView([<span class="hljs-number">52.5</span>, -<span class="hljs-number">1
 
     
     <script src="../gitbook/plugins/gitbook-plugin-mathjax/plugin.js"></script>
+    
+
+    
+    <script src="../gitbook/plugins/gitbook-plugin-livereload/plugin.js"></script>
     
 
 <script>

@@ -4,7 +4,7 @@
     <head>
         
         <meta charset="UTF-8">
-        <title>Basic map with OSM tiles | Practical OpenLayers 3 &amp; Leaflet</title>
+        <title>WMS layer | Practical OpenLayers 3 &amp; Leaflet</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 1.0.0">
@@ -18,10 +18,10 @@
     
     
     
-    <link rel="next" href="../ol3/01-OSGB-MAP.html" />
+    <link rel="next" href="../ol3/05-WMS-INFO.html" />
     
     
-    <link rel="prev" href="../ol3/README.html" />
+    <link rel="prev" href="../ol3/03-GEOJSON-INFO.html" />
     
 
         
@@ -33,7 +33,7 @@
 
 
         
-    <div class="book"  data-level="1.1" data-basepath=".." data-revision="1409673984869">
+    <div class="book"  data-level="1.5" data-basepath=".." data-revision="1410535817023">
     
 
 <div class="book-summary">
@@ -82,7 +82,7 @@
                 
     
         
-        <li class="chapter active" data-level="1.1" data-path="ol3/00-OSM-MAP.html">
+        <li class="chapter " data-level="1.1" data-path="ol3/00-OSM-MAP.html">
             
                 
                     <a href="../ol3/00-OSM-MAP.html">
@@ -146,7 +146,7 @@
         </li>
     
         
-        <li class="chapter " data-level="1.5" data-path="ol3/04-WMS-LAYER.html">
+        <li class="chapter active" data-level="1.5" data-path="ol3/04-WMS-LAYER.html">
             
                 
                     <a href="../ol3/04-WMS-LAYER.html">
@@ -389,27 +389,31 @@
                 <div class="page-inner">
                 
                 
-                    <section class="normal" id="section-gitbook_10">
+                    <section class="normal" id="section-gitbook_29">
                     
-                        <h2 id="basic-map-with-osm-tiles">Basic map with OSM tiles</h2>
-<p>Edit <code>ol3.js</code> so that it looks as follows to display a simple map displaying an OpenStreetMap base map in Spherical Mercator:</p>
-<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> map = <span class="hljs-keyword">new</span> ol.Map({
-    target: <span class="hljs-string">'map'</span>,
-    layers: [
-        <span class="hljs-keyword">new</span> ol.layer.Tile({
-            source: <span class="hljs-keyword">new</span> ol.source.OSM()
+                        <h2 id="wms-layer">WMS layer</h2>
+<p>Adding a WMS overlay layer in the same projection as the map is also fairly straightforward, in this example we are adding a local authority district layer from <a href="http://geoserver.org/" target="_blank">GeoServer</a>.</p>
+<p>Here we are defining a cached tiled layer similar to our base map and again defining a <code>tileGrid</code> to ensure that the requests are for the appropriate resolutions (scales) and line up with the cache grid.</p>
+<p>Add the following <strong>just above where you added the code to add a GeoJSON layer</strong> (<code>// -- GeoJSON layer --</code>) a few steps back:</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// -- Load GB disticts as a WMS layer --</span>
+
+<span class="hljs-keyword">var</span> districtLayer = <span class="hljs-keyword">new</span> ol.layer.Tile({
+    source: <span class="hljs-keyword">new</span> ol.source.TileWMS({
+        url: <span class="hljs-string">'http://osgis.astun.co.uk/geoserver/gwc/service/wms?'</span>,
+        params: {
+            <span class="hljs-string">'LAYERS'</span>: <span class="hljs-string">'osgb:district_borough_unitary_region'</span>,
+            <span class="hljs-string">'VERSION'</span>: <span class="hljs-string">'1.1.1'</span>,
+            <span class="hljs-string">'FORMAT'</span>: <span class="hljs-string">'image/png'</span>,
+            <span class="hljs-string">'TILED'</span>: <span class="hljs-literal">true</span>
+        },
+        tileGrid: <span class="hljs-keyword">new</span> ol.tilegrid.TileGrid({
+            origin: extent.slice(<span class="hljs-number">0</span>, <span class="hljs-number">2</span>),
+            resolutions: resolutions
         })
-    ],
-    view: <span class="hljs-keyword">new</span> ol.View({
-        center: ol.proj.transform([-<span class="hljs-number">0.92</span>, <span class="hljs-number">52.96</span>], <span class="hljs-string">'EPSG:4326'</span>, <span class="hljs-string">'EPSG:3857'</span>),
-        zoom: <span class="hljs-number">6</span>
     })
 });
+map.addLayer(districtLayer);
 </code></pre>
-<p>Save the file and refresh the page in your browser (F5).</p>
-<h3 id="notes">Notes</h3>
-<h4 id="projection">Projection</h4>
-<p>The default OL3 projection is <a href="http://epsg.io/3857" target="_blank">Spherical Mercator (EPSG:3857)</a> which is used by Google Map, OSM amongst others. While Spherical Mercator&#39;s map units are in meters it&#39;s common to use longitude &amp; latitude to represent coordinates and here we see the initial map center specified in <a href="http://epsg.io/4326" target="_blank">WGS84 (EPSG:4326)</a> and transformed to Spherical Mercator.</p>
 
                     
                     </section>
@@ -420,10 +424,10 @@
         </div>
 
         
-        <a href="../ol3/README.html" class="navigation navigation-prev " aria-label="Previous page: OpenLayers 3"><i class="fa fa-angle-left"></i></a>
+        <a href="../ol3/03-GEOJSON-INFO.html" class="navigation navigation-prev " aria-label="Previous page: Info for GeoJSON layer"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="../ol3/01-OSGB-MAP.html" class="navigation navigation-next " aria-label="Next page: OS-GB Map with Ordnance Survey tiles"><i class="fa fa-angle-right"></i></a>
+        <a href="../ol3/05-WMS-INFO.html" class="navigation navigation-next " aria-label="Next page: Info for WMS layer"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>
@@ -437,6 +441,10 @@
 
     
     <script src="../gitbook/plugins/gitbook-plugin-mathjax/plugin.js"></script>
+    
+
+    
+    <script src="../gitbook/plugins/gitbook-plugin-livereload/plugin.js"></script>
     
 
 <script>

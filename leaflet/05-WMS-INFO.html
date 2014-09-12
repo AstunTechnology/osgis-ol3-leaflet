@@ -4,7 +4,7 @@
     <head>
         
         <meta charset="UTF-8">
-        <title>OS-GB Map with Ordnance Survey tiles | Practical OpenLayers 3 &amp; Leaflet</title>
+        <title>Info for WMS layer | Practical OpenLayers 3 &amp; Leaflet</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 1.0.0">
@@ -18,10 +18,8 @@
     
     
     
-    <link rel="next" href="../ol3/02-GEOJSON.html" />
     
-    
-    <link rel="prev" href="../ol3/00-OSM-MAP.html" />
+    <link rel="prev" href="../leaflet/04-WMS-LAYER.html" />
     
 
         
@@ -33,7 +31,7 @@
 
 
         
-    <div class="book"  data-level="1.2" data-basepath=".." data-revision="1409673984869">
+    <div class="book"  data-level="2.6" data-basepath=".." data-revision="1410535817023">
     
 
 <div class="book-summary">
@@ -98,7 +96,7 @@
         </li>
     
         
-        <li class="chapter active" data-level="1.2" data-path="ol3/01-OSGB-MAP.html">
+        <li class="chapter " data-level="1.2" data-path="ol3/01-OSGB-MAP.html">
             
                 
                     <a href="../ol3/01-OSGB-MAP.html">
@@ -280,7 +278,7 @@
         </li>
     
         
-        <li class="chapter " data-level="2.6" data-path="leaflet/05-WMS-INFO.html">
+        <li class="chapter active" data-level="2.6" data-path="leaflet/05-WMS-INFO.html">
             
                 
                     <a href="../leaflet/05-WMS-INFO.html">
@@ -389,60 +387,83 @@
                 <div class="page-inner">
                 
                 
-                    <section class="normal" id="section-gitbook_16">
+                    <section class="normal" id="section-gitbook_24">
                     
-                        <h2 id="os-gb-map-with-ordnance-survey-tiles">OS-GB Map with Ordnance Survey tiles</h2>
-<p>Displaying a map in British National Grid (<code>EPSG:27700</code>) takes a little more work. The OSM map is in OL3&#39;s default projection (Spherical Mercator), covers the whole world and has well known resolutions (zoom levels). Using an alternative projection and a corresponding base map requires that we define the projection, map extents and resolutions.</p>
-<p>Replace the contents of <code>ol3.js</code> with the following and read through the comments for explanation:</p>
-<pre><code class="lang-javascript"><span class="hljs-comment">// Extent of the map in units of the projection (these match our base map)</span>
-<span class="hljs-keyword">var</span> extent = [-<span class="hljs-number">3276800</span>, -<span class="hljs-number">3276800</span>, <span class="hljs-number">3276800</span>, <span class="hljs-number">3276800</span>];
+                        <h2 id="info-for-wms-layer">Info for WMS layer</h2>
+<p>Getting information for a WMS layer is a bit more involved due to Leaflet not providing an out of the box way of determining the URL for a WMS GetFeatureInfo request. This example defines a <code>getFeatureInfoUrl</code> function derived from <a href="https://gist.github.com/rclark/6908938#file-l-tilelayer-betterwms-js-L33" target="_blank">this gist</a>.</p>
+<p>Add the following <strong>to the bottom</strong> of <code>leaflet.js</code>:</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// -- Display information on click --</span>
 
-<span class="hljs-comment">// Fixed resolutions to display the map at (pixels per ground unit (meters when</span>
-<span class="hljs-comment">// the projection is British National Grid))</span>
-<span class="hljs-keyword">var</span> resolutions = [<span class="hljs-number">1600</span>,<span class="hljs-number">800</span>,<span class="hljs-number">400</span>,<span class="hljs-number">200</span>,<span class="hljs-number">100</span>,<span class="hljs-number">50</span>,<span class="hljs-number">25</span>,<span class="hljs-number">10</span>,<span class="hljs-number">5</span>,<span class="hljs-number">2.5</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0.5</span>,<span class="hljs-number">0.25</span>,<span class="hljs-number">0.125</span>,<span class="hljs-number">0.0625</span>];
+<span class="hljs-comment">// Add an event handler for the map "click" event</span>
+map.on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span> </span>{
 
-<span class="hljs-comment">// Define British National Grid Proj4js projection (copied from http://epsg.io/27700.js)</span>
-proj4.defs(<span class="hljs-string">"EPSG:27700"</span>,<span class="hljs-string">"+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs"</span>);
+    <span class="hljs-comment">// Build the URL for a GetFeatureInfo</span>
+    <span class="hljs-keyword">var</span> url = getFeatureInfoUrl(
+                    map,
+                    districtLayer,
+                    e.latlng,
+                    {
+                        <span class="hljs-string">'info_format'</span>: <span class="hljs-string">'application/json'</span>,
+                        <span class="hljs-string">'propertyName'</span>: <span class="hljs-string">'NAME,AREA_CODE,DESCRIPTIO'</span>
+                    }
+                );
 
-<span class="hljs-comment">// Define an OL3 projection based on the included Proj4js projection</span>
-<span class="hljs-comment">// definition and set it's extent.</span>
-<span class="hljs-keyword">var</span> bng = ol.proj.get(<span class="hljs-string">'EPSG:27700'</span>);
-bng.setExtent(extent);
+    <span class="hljs-comment">// Send the request and create a popup showing the response</span>
+    reqwest({
+        url: url,
+        type: <span class="hljs-string">'json'</span>,
+    }).then(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data)</span> </span>{
+        <span class="hljs-keyword">var</span> feature = data.features[<span class="hljs-number">0</span>];
+        L.popup()
+        .setLatLng(e.latlng)
+        .setContent(L.Util.template(<span class="hljs-string">"&lt;h2&gt;{NAME}&lt;/h2&gt;&lt;p&gt;{DESCRIPTIO}&lt;/p&gt;"</span>, feature.properties))
+        .openOn(map);
+    });
 
-<span class="hljs-keyword">var</span> map = <span class="hljs-keyword">new</span> ol.Map({
-    target: <span class="hljs-string">'map'</span>,
-    layers: [
-        <span class="hljs-keyword">new</span> ol.layer.Tile({
-            source: <span class="hljs-keyword">new</span> ol.source.TileWMS({
-                url: <span class="hljs-string">'http://t0.ads.astuntechnology.com/open/osopen/service?'</span>,
-                attributions: [
-                    <span class="hljs-keyword">new</span> ol.Attribution({html: <span class="hljs-string">'Astun Data Service &amp;copy; Ordnance Survey.'</span>})
-                ],
-                params: {
-                    <span class="hljs-string">'LAYERS'</span>: <span class="hljs-string">'osopen'</span>,
-                    <span class="hljs-string">'FORMAT'</span>: <span class="hljs-string">'image/png'</span>,
-                    <span class="hljs-string">'TILED'</span>: <span class="hljs-literal">true</span>
-                },
-                <span class="hljs-comment">// Define a TileGrid to ensure that WMS requests are made for</span>
-                <span class="hljs-comment">// tiles at the correct resolutions and tile boundaries</span>
-                tileGrid: <span class="hljs-keyword">new</span> ol.tilegrid.TileGrid({
-                    origin: extent.slice(<span class="hljs-number">0</span>, <span class="hljs-number">2</span>),
-                    resolutions: resolutions
-                })
-            })
-        })
-    ],
-    view: <span class="hljs-keyword">new</span> ol.View({
-        projection: bng,
-        resolutions: resolutions,
-        center: [<span class="hljs-number">413674</span>, <span class="hljs-number">289141</span>],
-        zoom: <span class="hljs-number">0</span>
-    })
 });
+
+<span class="hljs-comment">/**
+ * Return the WMS GetFeatureInfo URL for the passed map, layer and coordinate.
+ * Specific parameters can be passed as params which will override the
+ * calculated parameters of the same name.
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getFeatureInfoUrl</span><span class="hljs-params">(map, layer, latlng, params)</span> </span>{
+
+    <span class="hljs-keyword">var</span> point = map.latLngToContainerPoint(latlng, map.getZoom()),
+        size = map.getSize(),
+        bounds = map.getBounds(),
+        sw = bounds.getSouthWest(),
+        ne = bounds.getNorthEast(),
+        sw = crs.projection._proj.forward([sw.lng, sw.lat]),
+        ne = crs.projection._proj.forward([ne.lng, ne.lat]);
+
+    <span class="hljs-keyword">var</span> defaultParams = {
+        request: <span class="hljs-string">'GetFeatureInfo'</span>,
+        service: <span class="hljs-string">'WMS'</span>,
+        srs: layer._crs.code,
+        styles: <span class="hljs-string">''</span>,
+        version: layer._wmsVersion,
+        format: layer.options.format,
+        bbox: [sw.join(<span class="hljs-string">','</span>), ne.join(<span class="hljs-string">','</span>)].join(<span class="hljs-string">','</span>),
+        height: size.y,
+        width: size.x,
+        layers: layer.options.layers,
+        query_layers: layer.options.layers,
+        info_format: <span class="hljs-string">'text/html'</span>
+    };
+
+    params = L.Util.extend(defaultParams, params || {});
+
+    params[params.version === <span class="hljs-string">'1.3.0'</span> ? <span class="hljs-string">'i'</span> : <span class="hljs-string">'x'</span>] = point.x;
+    params[params.version === <span class="hljs-string">'1.3.0'</span> ? <span class="hljs-string">'j'</span> : <span class="hljs-string">'y'</span>] = point.y;
+
+    <span class="hljs-keyword">return</span> layer._url + L.Util.getParamString(params, layer._url, <span class="hljs-literal">true</span>);
+
+}
 </code></pre>
-<h3 id="notes">Notes</h3>
-<h4 id="projection">Projection</h4>
-<p>OL3 integrates <a href="http://proj4js.org/" target="_blank">Proj4js</a> to transform coordinates from one coordinate system to another. <a href="http://epsg.io/" target="_blank">epsg.io</a> provides definitions for most common projections including Proj4js definitions. The extents specified match those of our base map.</p>
+<h3 id="all-done">All done!</h3>
+<p>At this point you should have a working Leaflet web map. Visit the <a href="http://leafletjs.com" target="_blank">Leaflet website</a> where you will find excellent documentation including a <a href="http://leafletjs.com/plugins.html" target="_blank">comprehensive list of plugins</a>.</p>
+<p>If you&#39;re still looking to do more try the <a href="../#extra-credit">Extra Credit suggestions</a>.</p>
 
                     
                     </section>
@@ -453,10 +474,8 @@ bng.setExtent(extent);
         </div>
 
         
-        <a href="../ol3/00-OSM-MAP.html" class="navigation navigation-prev " aria-label="Previous page: Basic map with OSM tiles"><i class="fa fa-angle-left"></i></a>
+        <a href="../leaflet/04-WMS-LAYER.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: WMS layer"><i class="fa fa-angle-left"></i></a>
         
-        
-        <a href="../ol3/02-GEOJSON.html" class="navigation navigation-next " aria-label="Next page: GeoJSON layer with markers"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>
@@ -470,6 +489,10 @@ bng.setExtent(extent);
 
     
     <script src="../gitbook/plugins/gitbook-plugin-mathjax/plugin.js"></script>
+    
+
+    
+    <script src="../gitbook/plugins/gitbook-plugin-livereload/plugin.js"></script>
     
 
 <script>

@@ -18,10 +18,10 @@
     
     
     
-    <link rel="next" href="../leaflet/02-GEOJSON.html" />
+    <link rel="next" href="../ol3/02-GEOJSON.html" />
     
     
-    <link rel="prev" href="../leaflet/00-OSM-MAP.html" />
+    <link rel="prev" href="../ol3/00-OSM-MAP.html" />
     
 
         
@@ -33,7 +33,7 @@
 
 
         
-    <div class="book"  data-level="2.2" data-basepath=".." data-revision="1409673984869">
+    <div class="book"  data-level="1.2" data-basepath=".." data-revision="1410535817023">
     
 
 <div class="book-summary">
@@ -98,7 +98,7 @@
         </li>
     
         
-        <li class="chapter " data-level="1.2" data-path="ol3/01-OSGB-MAP.html">
+        <li class="chapter active" data-level="1.2" data-path="ol3/01-OSGB-MAP.html">
             
                 
                     <a href="../ol3/01-OSGB-MAP.html">
@@ -216,7 +216,7 @@
         </li>
     
         
-        <li class="chapter active" data-level="2.2" data-path="leaflet/01-OSGB-MAP.html">
+        <li class="chapter " data-level="2.2" data-path="leaflet/01-OSGB-MAP.html">
             
                 
                     <a href="../leaflet/01-OSGB-MAP.html">
@@ -389,44 +389,60 @@
                 <div class="page-inner">
                 
                 
-                    <section class="normal" id="section-gitbook_9">
+                    <section class="normal" id="section-gitbook_32">
                     
                         <h2 id="os-gb-map-with-ordnance-survey-tiles">OS-GB Map with Ordnance Survey tiles</h2>
-<p>Displaying a map in British National Grid (<code>EPSG:27700</code>) with Leaflet requires the <a href="https://github.com/kartena/Proj4Leaflet" target="_blank">Proj4Leaflet</a> plugin which adds <a href="http://proj4js.org/" target="_blank">Proj4js</a>.</p>
-<blockquote>
-<p>Leaflet comes with built in support for tiles in Spherical Mercator. If you need support for tile layers in other projections, the Proj4Leaflet plugin lets you use tiles in any projection supported by Proj4js, which means support for just about any projection commonly used. - <a href="https://github.com/kartena/Proj4Leaflet" target="_blank">Proj4Leaflet</a></p>
-</blockquote>
-<p>Unlike OpenLayers coordinates are still expressed in WGS84 as you can see in the call to <code>map.setView</code>.</p>
-<p>Replace the contents of <code>leaflet.js</code> with the following and read through the comments for explanation:</p>
-<pre><code class="lang-javascript"><span class="hljs-comment">// Define a Proj4Leaflet crs instance configured for British National Grid</span>
-<span class="hljs-comment">// (EPSG:27700) and the resolutions of our base map</span>
-<span class="hljs-keyword">var</span> crs = <span class="hljs-keyword">new</span> L.Proj.CRS(
-    <span class="hljs-string">'EPSG:27700'</span>,
-    <span class="hljs-string">'+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +datum=OSGB36 +units=m +no_defs'</span>,
-    {
-        resolutions: [<span class="hljs-number">1600</span>,<span class="hljs-number">800</span>,<span class="hljs-number">400</span>,<span class="hljs-number">200</span>,<span class="hljs-number">100</span>,<span class="hljs-number">50</span>,<span class="hljs-number">25</span>,<span class="hljs-number">10</span>,<span class="hljs-number">5</span>,<span class="hljs-number">2.5</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0.5</span>,<span class="hljs-number">0.25</span>,<span class="hljs-number">0.125</span>,<span class="hljs-number">0.0625</span>]
-    }
-);
+<p>Displaying a map in British National Grid (<code>EPSG:27700</code>) takes a little more work. The OSM map is in OL3&#39;s default projection (Spherical Mercator), covers the whole world and has well known resolutions (zoom levels). Using an alternative projection and a corresponding base map requires that we define the projection, map extents and resolutions.</p>
+<p>Replace the contents of <code>ol3.js</code> with the following and read through the comments for explanation:</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// Extent of the map in units of the projection (these match our base map)</span>
+<span class="hljs-keyword">var</span> extent = [-<span class="hljs-number">3276800</span>, -<span class="hljs-number">3276800</span>, <span class="hljs-number">3276800</span>, <span class="hljs-number">3276800</span>];
 
-<span class="hljs-comment">// Define a standard Leaflet map specifying our crs instance and define a WMS</span>
-<span class="hljs-comment">// base map</span>
-<span class="hljs-keyword">var</span> map = <span class="hljs-keyword">new</span> L.Map(<span class="hljs-string">'map'</span>, {
-    crs: crs,
-    continuousWorld: <span class="hljs-literal">true</span>,
-    worldCopyJump: <span class="hljs-literal">false</span>,
+<span class="hljs-comment">// Fixed resolutions to display the map at (pixels per ground unit (meters when</span>
+<span class="hljs-comment">// the projection is British National Grid))</span>
+<span class="hljs-keyword">var</span> resolutions = [<span class="hljs-number">1600</span>,<span class="hljs-number">800</span>,<span class="hljs-number">400</span>,<span class="hljs-number">200</span>,<span class="hljs-number">100</span>,<span class="hljs-number">50</span>,<span class="hljs-number">25</span>,<span class="hljs-number">10</span>,<span class="hljs-number">5</span>,<span class="hljs-number">2.5</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0.5</span>,<span class="hljs-number">0.25</span>,<span class="hljs-number">0.125</span>,<span class="hljs-number">0.0625</span>];
+
+<span class="hljs-comment">// Define British National Grid Proj4js projection (copied from http://epsg.io/27700.js)</span>
+proj4.defs(<span class="hljs-string">"EPSG:27700"</span>,<span class="hljs-string">"+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs"</span>);
+
+<span class="hljs-comment">// Define an OL3 projection based on the included Proj4js projection</span>
+<span class="hljs-comment">// definition and set it's extent.</span>
+<span class="hljs-keyword">var</span> bng = ol.proj.get(<span class="hljs-string">'EPSG:27700'</span>);
+bng.setExtent(extent);
+
+<span class="hljs-keyword">var</span> map = <span class="hljs-keyword">new</span> ol.Map({
+    target: <span class="hljs-string">'map'</span>,
     layers: [
-        L.tileLayer.wms(<span class="hljs-string">'http://t0.ads.astuntechnology.com/open/osopen/service'</span>, {
-            layers: <span class="hljs-string">'osopen'</span>,
-            format: <span class="hljs-string">'image/png'</span>,
-            maxZoom: <span class="hljs-number">14</span>,
-            minZoom: <span class="hljs-number">0</span>,
-            continuousWorld: <span class="hljs-literal">true</span>,
-            attribution: <span class="hljs-string">'Astun Data Service &amp;copy; Ordnance Survey.'</span>
-        })]
+        <span class="hljs-keyword">new</span> ol.layer.Tile({
+            source: <span class="hljs-keyword">new</span> ol.source.TileWMS({
+                url: <span class="hljs-string">'http://t0.ads.astuntechnology.com/open/osopen/service?'</span>,
+                attributions: [
+                    <span class="hljs-keyword">new</span> ol.Attribution({html: <span class="hljs-string">'Astun Data Service &amp;copy; Ordnance Survey.'</span>})
+                ],
+                params: {
+                    <span class="hljs-string">'LAYERS'</span>: <span class="hljs-string">'osopen'</span>,
+                    <span class="hljs-string">'FORMAT'</span>: <span class="hljs-string">'image/png'</span>,
+                    <span class="hljs-string">'TILED'</span>: <span class="hljs-literal">true</span>
+                },
+                <span class="hljs-comment">// Define a TileGrid to ensure that WMS requests are made for</span>
+                <span class="hljs-comment">// tiles at the correct resolutions and tile boundaries</span>
+                tileGrid: <span class="hljs-keyword">new</span> ol.tilegrid.TileGrid({
+                    origin: extent.slice(<span class="hljs-number">0</span>, <span class="hljs-number">2</span>),
+                    resolutions: resolutions
+                })
+            })
+        })
+    ],
+    view: <span class="hljs-keyword">new</span> ol.View({
+        projection: bng,
+        resolutions: resolutions,
+        center: [<span class="hljs-number">413674</span>, <span class="hljs-number">289141</span>],
+        zoom: <span class="hljs-number">0</span>
+    })
 });
-
-map.setView([<span class="hljs-number">52.5</span>, -<span class="hljs-number">1.8</span>], <span class="hljs-number">0</span>);
 </code></pre>
+<h3 id="notes">Notes</h3>
+<h4 id="projection">Projection</h4>
+<p>OL3 integrates <a href="http://proj4js.org/" target="_blank">Proj4js</a> to transform coordinates from one coordinate system to another. <a href="http://epsg.io/" target="_blank">epsg.io</a> provides definitions for most common projections including Proj4js definitions. The extents specified match those of our base map.</p>
 
                     
                     </section>
@@ -437,10 +453,10 @@ map.setView([<span class="hljs-number">52.5</span>, -<span class="hljs-number">1
         </div>
 
         
-        <a href="../leaflet/00-OSM-MAP.html" class="navigation navigation-prev " aria-label="Previous page: Basic map with OSM tiles"><i class="fa fa-angle-left"></i></a>
+        <a href="../ol3/00-OSM-MAP.html" class="navigation navigation-prev " aria-label="Previous page: Basic map with OSM tiles"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="../leaflet/02-GEOJSON.html" class="navigation navigation-next " aria-label="Next page: GeoJSON layer with markers"><i class="fa fa-angle-right"></i></a>
+        <a href="../ol3/02-GEOJSON.html" class="navigation navigation-next " aria-label="Next page: GeoJSON layer with markers"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>
@@ -454,6 +470,10 @@ map.setView([<span class="hljs-number">52.5</span>, -<span class="hljs-number">1
 
     
     <script src="../gitbook/plugins/gitbook-plugin-mathjax/plugin.js"></script>
+    
+
+    
+    <script src="../gitbook/plugins/gitbook-plugin-livereload/plugin.js"></script>
     
 
 <script>

@@ -4,7 +4,7 @@
     <head>
         
         <meta charset="UTF-8">
-        <title>Leaflet | Practical OpenLayers 3 &amp; Leaflet</title>
+        <title>Info for GeoJSON layer | Practical OpenLayers 3 &amp; Leaflet</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="generator" content="GitBook 1.0.0">
@@ -18,10 +18,10 @@
     
     
     
-    <link rel="next" href="../leaflet/00-OSM-MAP.html" />
+    <link rel="next" href="../ol3/04-WMS-LAYER.html" />
     
     
-    <link rel="prev" href="../ol3/05-WMS-INFO.html" />
+    <link rel="prev" href="../ol3/02-GEOJSON.html" />
     
 
         
@@ -33,7 +33,7 @@
 
 
         
-    <div class="book"  data-level="2" data-basepath=".." data-revision="1409673984869">
+    <div class="book"  data-level="1.4" data-basepath=".." data-revision="1410535817023">
     
 
 <div class="book-summary">
@@ -130,7 +130,7 @@
         </li>
     
         
-        <li class="chapter " data-level="1.4" data-path="ol3/03-GEOJSON-INFO.html">
+        <li class="chapter active" data-level="1.4" data-path="ol3/03-GEOJSON-INFO.html">
             
                 
                     <a href="../ol3/03-GEOJSON-INFO.html">
@@ -183,7 +183,7 @@
         </li>
     
         
-        <li class="chapter active" data-level="2" data-path="leaflet/README.html">
+        <li class="chapter " data-level="2" data-path="leaflet/README.html">
             
                 
                     <a href="../leaflet/README.html">
@@ -389,56 +389,49 @@
                 <div class="page-inner">
                 
                 
-                    <section class="normal" id="section-gitbook_3">
+                    <section class="normal" id="section-gitbook_28">
                     
-                        <h1 id="leaflet">Leaflet</h1>
-<blockquote>
-<p>An Open-Source JavaScript Library for Mobile-Friendly Interactive Maps.</p>
-<p>Leaflet is designed with simplicity, performance and usability in mind. It works efficiently across all major desktop and mobile platforms out of the box, taking advantage of HTML5 and CSS3 on modern browsers while still being accessible on older ones. - <a href="http://leafletjs.com/" target="_blank">leafletjs.com</a></p>
-</blockquote>
-<h2 id="get-started">Get started</h2>
-<p>If you&#39;ve not already completed the <a href="../ol3/README.html">OpenLayers 3 exercise</a> then change to the root of the repository and start a local webserver:</p>
-<pre><code>python -m SimpleHTTPServer
-</code></pre><p>Navigating to <a href="http://localhost:8000/leaflet/leaflet.html" target="_blank">http://localhost:8000/leaflet/leaflet.html</a> you should see a blank map ready for us to get started.</p>
-<h3 id="editing-files">Editing files</h3>
-<p>To get started coding open <code>leaflet/leaflet.js</code> in a text editor then move on to building a <a href="00-OSM-MAP.html">basic map with OSM tiles</a>. The other supporting files include:</p>
-<h4 id="html">HTML</h4>
-<p>The HTML file <code>leaflet.html</code> will remain the same throughout the workshop, it provides the basic page structure of a full page map and includes the required CSS and JavaScript including <code>leaflet.js</code> which you will be working on.</p>
-<pre><code class="lang-html"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-title">html</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"utf-8"</span> /&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Leaflet<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"viewport"</span> <span class="hljs-attribute">content</span>=<span class="hljs-value">"initial-scale=1.0, user-scalable=no, width=device-width"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"lib/leaflet-0.7.3/leaflet.css"</span> /&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"leaflet.css"</span> /&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"map"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"../common/lib/reqwest.min.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"lib/leaflet-0.7.3/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"lib/proj4-compressed.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"lib/proj4leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-title">script</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-title">script</span>&gt;</span>
-  <span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
-</code></pre>
-<h4 id="css">CSS</h4>
-<p>The CSS file <code>leaflet.css</code> will also remain unchanged, it defines some basic page style and ensures the map takes up the full page.</p>
-<pre><code class="lang-css"><span class="hljs-tag">html</span>, <span class="hljs-tag">body</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">padding</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">0</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">font-family</span>:<span class="hljs-value"> sans-serif</span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">font-size</span>:<span class="hljs-value"> small</span></span>;
-<span class="hljs-rule">}</span></span>
+                        <h2 id="info-for-geojson-layer">Info for GeoJSON layer</h2>
+<p>Displaying information associated with a marker requires a popup overlay and an event handler that finds the closest marker and displays the popup showing the associated features information.</p>
+<p>Again add the following <strong>to the bottom</strong> of <code>ol3.js</code>:</p>
+<pre><code class="lang-javascript"><span class="hljs-comment">// -- Display information on click --</span>
 
-<span class="hljs-id">#map</span> <span class="hljs-rules">{
-  <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
-  <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">100%</span></span></span>;
-<span class="hljs-rule">}</span></span>
+<span class="hljs-comment">// Create a popup overlay which will be used to display feature info</span>
+<span class="hljs-keyword">var</span> popup = <span class="hljs-keyword">new</span> ol.Popup();
+map.addOverlay(popup);
+
+<span class="hljs-comment">// Add an event handler for the map "click" event</span>
+map.on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(evt)</span> </span>{
+
+    <span class="hljs-comment">// Hide existing popup and reset it's class</span>
+    popup.hide();
+    popup.container.className = <span class="hljs-string">'ol-popup'</span>;
+
+    <span class="hljs-comment">// Attempt to find a feature in one of the visible vector layers</span>
+    <span class="hljs-keyword">var</span> feature = map.forEachFeatureAtPixel(evt.pixel, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(feature, layer)</span> </span>{
+        <span class="hljs-keyword">return</span> feature;
+    });
+
+    <span class="hljs-keyword">if</span> (feature) {
+
+        <span class="hljs-keyword">var</span> coord = feature.getGeometry().getCoordinates();
+        <span class="hljs-keyword">var</span> props = feature.getProperties();
+        <span class="hljs-keyword">var</span> info = <span class="hljs-string">"&lt;h2&gt;&lt;a href='"</span> + props.caseurl + <span class="hljs-string">"'&gt;"</span> + props.casereference + <span class="hljs-string">"&lt;/a&gt;&lt;/h2&gt;"</span>;
+            info += <span class="hljs-string">"&lt;p&gt;"</span> + props.locationtext + <span class="hljs-string">"&lt;/p&gt;"</span>;
+            info += <span class="hljs-string">"&lt;p&gt;Status: "</span> + props.status + <span class="hljs-string">" "</span> + props.statusdesc + <span class="hljs-string">"&lt;/p&gt;"</span>;
+        popup.container.className = <span class="hljs-string">'ol-popup marker'</span>;
+        popup.show(coord, info);
+
+    }
+
+});
 </code></pre>
-<p>Next step: build a <a href="00-OSM-MAP.html">basic map with OSM tiles</a>.</p>
+<h3 id="notes">Notes</h3>
+<h4 id="popup">Popup</h4>
+<p>OpenLayers 3 doesn&#39;t currently provide a popup so we are using one based on an example provided by Tim Schaub one of the OL3 core team. The popup is simply a positioned HTML element which is added to the map as an overlay which is fixed to a geographic coordinate.</p>
+<h4 id="cross-domain-requests">Cross-domain requests</h4>
+<p>The GeoJSON features are requested from a server on a different domain to the one that our OL3 map is served from. Normally these requests would fail due to your browser respecting the <a href="https://en.wikipedia.org/wiki/Same-origin_policy" target="_blank">same-origin policy</a> which by default prevents a page served from one domain loading textual content such as GeoJSON from another domain.</p>
+<p>Both the GeoJSON and WMS services used for this workshop allow cross-domain requests as they support <a href="http://www.w3.org/wiki/CORS_Enabled#What_is_CORS_about.3F" target="_blank">CORS</a> which is the modern way of permitting such requests. CORS is supported by <a href="https://en.wikipedia.org/wiki/Cross-origin_resource_sharing#Browser_support" target="_blank">all modern browsers</a>. The alternative would be to use <a href="https://en.wikipedia.org/wiki/JSONP" target="_blank">JSONP</a> which has wide browser support but requires requests be JSONP requests which specify a callback parameter.</p>
 
                     
                     </section>
@@ -449,10 +442,10 @@
         </div>
 
         
-        <a href="../ol3/05-WMS-INFO.html" class="navigation navigation-prev " aria-label="Previous page: Info for WMS layer"><i class="fa fa-angle-left"></i></a>
+        <a href="../ol3/02-GEOJSON.html" class="navigation navigation-prev " aria-label="Previous page: GeoJSON layer with markers"><i class="fa fa-angle-left"></i></a>
         
         
-        <a href="../leaflet/00-OSM-MAP.html" class="navigation navigation-next " aria-label="Next page: Basic map with OSM tiles"><i class="fa fa-angle-right"></i></a>
+        <a href="../ol3/04-WMS-LAYER.html" class="navigation navigation-next " aria-label="Next page: WMS layer"><i class="fa fa-angle-right"></i></a>
         
     </div>
 </div>
@@ -466,6 +459,10 @@
 
     
     <script src="../gitbook/plugins/gitbook-plugin-mathjax/plugin.js"></script>
+    
+
+    
+    <script src="../gitbook/plugins/gitbook-plugin-livereload/plugin.js"></script>
     
 
 <script>
