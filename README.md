@@ -22,9 +22,17 @@ Completed versions can be seen here:
 
 ## Getting started
 
-### OSGIS 2014 Workshop Quickstart
+### Get a copy of the repository
 
-The [OSGIS 2014](http://www.nottingham.ac.uk/osgis/home.aspx) Workshop used the [OSGeo Live DVD](http://live.osgeo.org/en/). To get setup do the following:
+First clone or download (and unzip) [the repository from GitHub](https://github.com/AstunTechnology/osgis-ol3-leaflet) to a suitable location on your local machine.
+
+    git clone https://github.com/AstunTechnology/osgis-ol3-leaflet.git
+
+If you are using your own machine then you should be good to go, [start building an OpenLayers 3 map](ol3/README.md).
+
+#### OSGeo Live DVD
+
+If you are using the [OSGeo Live DVD](http://live.osgeo.org/en/) do the following:
 
 * Dismiss the Welcome and Upgrade prompts
 * In Firefox (Applications > Web Browser) navigate to [http://is.gd/osgis2014](http://is.gd/osgis2014)

@@ -44,3 +44,8 @@ map.on('click', function(evt) {
 
 OpenLayers 3 doesn't currently provide a popup so we are using one based on an example provided by Tim Schaub one of the OL3 core team. The popup is simply a positioned HTML element which is added to the map as an overlay which is fixed to a geographic coordinate.
 
+#### Cross-domain requests
+
+The GeoJSON features are requested from a server on a different domain to the one that our OL3 map is served from. Normally these requests would fail due to your browser respecting the [same-origin policy](https://en.wikipedia.org/wiki/Same-origin_policy) which by default prevents a page served from one domain loading textual content such as GeoJSON from another domain.
+
+Both the GeoJSON and WMS services used for this workshop allow cross-domain requests as they support [CORS](http://www.w3.org/wiki/CORS_Enabled#What_is_CORS_about.3F) which is the modern way of permitting such requests. CORS is supported by [all modern browsers](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing#Browser_support). The alternative would be to use [JSONP](https://en.wikipedia.org/wiki/JSONP) which has wide browser support but requires requests be JSONP requests which specify a callback parameter.
