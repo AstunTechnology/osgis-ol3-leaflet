@@ -33,7 +33,7 @@
 
 
         
-    <div class="book"  data-level="1.5" data-basepath=".." data-revision="1410535817023">
+    <div class="book"  data-level="1.5" data-basepath=".." data-revision="1410604586778">
     
 
 <div class="book-summary">
@@ -389,11 +389,11 @@
                 <div class="page-inner">
                 
                 
-                    <section class="normal" id="section-gitbook_29">
+                    <section class="normal" id="section-gitbook_13">
                     
                         <h2 id="wms-layer">WMS layer</h2>
 <p>Adding a WMS overlay layer in the same projection as the map is also fairly straightforward, in this example we are adding a local authority district layer from <a href="http://geoserver.org/" target="_blank">GeoServer</a>.</p>
-<p>Here we are defining a cached tiled layer similar to our base map and again defining a <code>tileGrid</code> to ensure that the requests are for the appropriate resolutions (scales) and line up with the cache grid.</p>
+<p>Here we are defining a cached tiled layer similar to our base map, using the same <code>tileGrid</code> to ensure that the requests are for the appropriate resolutions (scales) and line up with the cache grid.</p>
 <p>Add the following <strong>just above where you added the code to add a GeoJSON layer</strong> (<code>// -- GeoJSON layer --</code>) a few steps back:</p>
 <pre><code class="lang-javascript"><span class="hljs-comment">// -- Load GB disticts as a WMS layer --</span>
 
@@ -406,10 +406,7 @@
             <span class="hljs-string">'FORMAT'</span>: <span class="hljs-string">'image/png'</span>,
             <span class="hljs-string">'TILED'</span>: <span class="hljs-literal">true</span>
         },
-        tileGrid: <span class="hljs-keyword">new</span> ol.tilegrid.TileGrid({
-            origin: extent.slice(<span class="hljs-number">0</span>, <span class="hljs-number">2</span>),
-            resolutions: resolutions
-        })
+        tileGrid: tileGrid
     })
 });
 map.addLayer(districtLayer);
@@ -441,10 +438,6 @@ map.addLayer(districtLayer);
 
     
     <script src="../gitbook/plugins/gitbook-plugin-mathjax/plugin.js"></script>
-    
-
-    
-    <script src="../gitbook/plugins/gitbook-plugin-livereload/plugin.js"></script>
     
 
 <script>

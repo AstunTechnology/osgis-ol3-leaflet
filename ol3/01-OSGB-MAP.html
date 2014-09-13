@@ -33,7 +33,7 @@
 
 
         
-    <div class="book"  data-level="1.2" data-basepath=".." data-revision="1410535817023">
+    <div class="book"  data-level="1.2" data-basepath=".." data-revision="1410604586778">
     
 
 <div class="book-summary">
@@ -389,7 +389,7 @@
                 <div class="page-inner">
                 
                 
-                    <section class="normal" id="section-gitbook_32">
+                    <section class="normal" id="section-gitbook_16">
                     
                         <h2 id="os-gb-map-with-ordnance-survey-tiles">OS-GB Map with Ordnance Survey tiles</h2>
 <p>Displaying a map in British National Grid (<code>EPSG:27700</code>) takes a little more work. The OSM map is in OL3&#39;s default projection (Spherical Mercator), covers the whole world and has well known resolutions (zoom levels). Using an alternative projection and a corresponding base map requires that we define the projection, map extents and resolutions.</p>
@@ -409,6 +409,13 @@ proj4.defs(<span class="hljs-string">"EPSG:27700"</span>,<span class="hljs-strin
 <span class="hljs-keyword">var</span> bng = ol.proj.get(<span class="hljs-string">'EPSG:27700'</span>);
 bng.setExtent(extent);
 
+<span class="hljs-comment">// Define a TileGrid to ensure that WMS requests are made for</span>
+<span class="hljs-comment">// tiles at the correct resolutions and tile boundaries</span>
+<span class="hljs-keyword">var</span> tileGrid = <span class="hljs-keyword">new</span> ol.tilegrid.TileGrid({
+    origin: extent.slice(<span class="hljs-number">0</span>, <span class="hljs-number">2</span>),
+    resolutions: resolutions
+});
+
 <span class="hljs-keyword">var</span> map = <span class="hljs-keyword">new</span> ol.Map({
     target: <span class="hljs-string">'map'</span>,
     layers: [
@@ -423,12 +430,7 @@ bng.setExtent(extent);
                     <span class="hljs-string">'FORMAT'</span>: <span class="hljs-string">'image/png'</span>,
                     <span class="hljs-string">'TILED'</span>: <span class="hljs-literal">true</span>
                 },
-                <span class="hljs-comment">// Define a TileGrid to ensure that WMS requests are made for</span>
-                <span class="hljs-comment">// tiles at the correct resolutions and tile boundaries</span>
-                tileGrid: <span class="hljs-keyword">new</span> ol.tilegrid.TileGrid({
-                    origin: extent.slice(<span class="hljs-number">0</span>, <span class="hljs-number">2</span>),
-                    resolutions: resolutions
-                })
+                tileGrid: tileGrid
             })
         })
     ],
@@ -470,10 +472,6 @@ bng.setExtent(extent);
 
     
     <script src="../gitbook/plugins/gitbook-plugin-mathjax/plugin.js"></script>
-    
-
-    
-    <script src="../gitbook/plugins/gitbook-plugin-livereload/plugin.js"></script>
     
 
 <script>
