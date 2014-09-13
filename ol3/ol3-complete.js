@@ -13,6 +13,13 @@ proj4.defs("EPSG:27700","+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=40
 var bng = ol.proj.get('EPSG:27700');
 bng.setExtent(extent);
 
+// Define a TileGrid to ensure that WMS requests are made for
+// tiles at the correct resolutions and tile boundaries
+var tileGrid = new ol.tilegrid.TileGrid({
+    origin: extent.slice(0, 2),
+    resolutions: resolutions
+});
+
 var map = new ol.Map({
     target: 'map',
     layers: [
@@ -27,12 +34,7 @@ var map = new ol.Map({
                     'FORMAT': 'image/png',
                     'TILED': true
                 },
-                // Define a TileGrid to ensure that WMS requests are made for
-                // tiles at the correct resolutions and tile boundaries
-                tileGrid: new ol.tilegrid.TileGrid({
-                    origin: extent.slice(0, 2),
-                    resolutions: resolutions
-                })
+                tileGrid: tileGrid
             })
         })
     ],
@@ -55,10 +57,7 @@ var districtLayer = new ol.layer.Tile({
             'FORMAT': 'image/png',
             'TILED': true
         },
-        tileGrid: new ol.tilegrid.TileGrid({
-            origin: extent.slice(0, 2),
-            resolutions: resolutions
-        })
+        tileGrid: tileGrid
     })
 });
 map.addLayer(districtLayer);

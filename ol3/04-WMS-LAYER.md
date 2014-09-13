@@ -2,7 +2,7 @@
 
 Adding a WMS overlay layer in the same projection as the map is also fairly straightforward, in this example we are adding a local authority district layer from [GeoServer](http://geoserver.org/).
 
-Here we are defining a cached tiled layer similar to our base map and again defining a `tileGrid` to ensure that the requests are for the appropriate resolutions (scales) and line up with the cache grid.
+Here we are defining a cached tiled layer similar to our base map, using the same `tileGrid` to ensure that the requests are for the appropriate resolutions (scales) and line up with the cache grid.
 
 Add the following **just above where you added the code to add a GeoJSON layer** (`// -- GeoJSON layer --`) a few steps back:
 
@@ -18,10 +18,7 @@ var districtLayer = new ol.layer.Tile({
             'FORMAT': 'image/png',
             'TILED': true
         },
-        tileGrid: new ol.tilegrid.TileGrid({
-            origin: extent.slice(0, 2),
-            resolutions: resolutions
-        })
+        tileGrid: tileGrid
     })
 });
 map.addLayer(districtLayer);
