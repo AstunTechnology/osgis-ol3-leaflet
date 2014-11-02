@@ -30,7 +30,7 @@ map.setView([52.5, -1.8], 0);
 // Make a request for GeoJSON features, and add them to a layer using the
 // default marker style and zoom to their extent
 reqwest({
-    url: 'http://hub-dev.astun.co.uk/developmentcontrol/0.1/applications/search?&gsscode=E07000214&status=live',
+    url: 'http://digitalservices.surreyi.gov.uk/developmentcontrol/0.1/applications/search?status=live&gsscode=E07000214&status=live',
     type: 'json',
 }).then(function (data) {
     var planningAppsLayer = L.geoJson(data, {

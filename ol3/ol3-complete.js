@@ -69,7 +69,7 @@ map.addLayer(districtLayer);
 // for display
 var planningAppsSource = new ol.source.GeoJSON({
     'projection': map.getView().getProjection(),
-    'url': 'http://hub-dev.astun.co.uk/developmentcontrol/0.1/applications/search?status=live&gsscode=E07000214&status=live'
+    'url': 'http://digitalservices.surreyi.gov.uk/developmentcontrol/0.1/applications/search?status=live&gsscode=E07000214&status=live'
 });
 
 // Create a vector layer to display the features within the GeoJSON source and
