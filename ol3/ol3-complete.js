@@ -101,15 +101,15 @@ planningAppsSource.on('change', function (evt) {
 // -- Display information on click --
 
 // Create a popup overlay which will be used to display feature info
-var popup = new ol.Popup();
+var popup = new ol.Overlay.Popup();
 map.addOverlay(popup);
 
 // Add an event handler for the map "click" event
 map.on('click', function(evt) {
 
-    // Hide existing popup and reset it's class
+    // Hide existing popup and reset it's offset
     popup.hide();
-    popup.container.className = 'ol-popup';
+    popup.setOffset([0, 0]);
 
     // Attempt to find a marker from the planningAppsLayer
     var feature = map.forEachFeatureAtPixel(evt.pixel, function(feature, layer) {
@@ -123,7 +123,8 @@ map.on('click', function(evt) {
         var info = "<h2><a href='" + props.caseurl + "'>" + props.casereference + "</a></h2>";
             info += "<p>" + props.locationtext + "</p>";
             info += "<p>Status: " + props.status + " " + props.statusdesc + "</p>";
-        popup.container.className = 'ol-popup marker';
+        // Offset the popup so it points at the middle of the marker not the tip
+        popup.setOffset([0, -22]);
         popup.show(coord, info);
 
     } else {
