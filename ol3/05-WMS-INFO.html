@@ -33,7 +33,7 @@
 
 
         
-    <div class="book"  data-level="1.6" data-basepath=".." data-revision="1410604586778">
+    <div class="book"  data-level="1.6" data-basepath=".." data-revision="1414939405696">
     
 
 <div class="book-summary">
@@ -397,9 +397,9 @@
 <pre><code class="lang-javascript"><span class="hljs-comment">// Add an event handler for the map "click" event</span>
 map.on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(evt)</span> </span>{
 
-    <span class="hljs-comment">// Hide existing popup and reset it's class</span>
+    <span class="hljs-comment">// Hide existing popup and reset it's offset</span>
     popup.hide();
-    popup.container.className = <span class="hljs-string">'ol-popup'</span>;
+    popup.setOffset([<span class="hljs-number">0</span>, <span class="hljs-number">0</span>]);
 
     <span class="hljs-comment">// Attempt to find a marker from the planningAppsLayer</span>
     <span class="hljs-keyword">var</span> feature = map.forEachFeatureAtPixel(evt.pixel, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(feature, layer)</span> </span>{
@@ -413,7 +413,8 @@ map.on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><sp
         <span class="hljs-keyword">var</span> info = <span class="hljs-string">"&lt;h2&gt;&lt;a href='"</span> + props.caseurl + <span class="hljs-string">"'&gt;"</span> + props.casereference + <span class="hljs-string">"&lt;/a&gt;&lt;/h2&gt;"</span>;
             info += <span class="hljs-string">"&lt;p&gt;"</span> + props.locationtext + <span class="hljs-string">"&lt;/p&gt;"</span>;
             info += <span class="hljs-string">"&lt;p&gt;Status: "</span> + props.status + <span class="hljs-string">" "</span> + props.statusdesc + <span class="hljs-string">"&lt;/p&gt;"</span>;
-        popup.container.className = <span class="hljs-string">'ol-popup marker'</span>;
+        <span class="hljs-comment">// Offset the popup so it points at the middle of the marker not the tip</span>
+        popup.setOffset([<span class="hljs-number">0</span>, -<span class="hljs-number">22</span>]);
         popup.show(coord, info);
 
     } <span class="hljs-keyword">else</span> {

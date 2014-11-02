@@ -33,17 +33,19 @@
 }
 
 .ol-popup-content {
-    min-width: 250px;
+    min-width: 170px;
     max-height: 200px;
     overflow-x: auto;
 }
 
 .ol-popup-closer {
-    color: gray;
-    text-decoration: none;
     position: absolute;
     top: 2px;
-    right: 8px;
+    right: 2px;
+    font-size: 150%;
+    padding: 0 4px;
+    color: gray;
+    text-decoration: none;
 }
 
 .ol-popup-closer:after {
