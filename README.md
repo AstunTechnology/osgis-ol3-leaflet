@@ -2,7 +2,8 @@
 
 A hands on introduction to using [OpenLayer 3 (OL3)](http://ol3js.org) and [Leaflet](http://leafletjs.com) to display spatial data on the web. The workshop will introduce the two libraries, the underpinning concepts and strengths of each, and take delegates through creating a series of examples.
 
-Documentation: [http://astuntechnology.github.io/osgis-ol3-leaflet/](http://astuntechnology.github.io/osgis-ol3-leaflet/)
+Documentation: [http://astuntechnology.github.io/osgis-ol3-leaflet/](http://astuntechnology.github.io/osgis-ol3-leaflet/)  
+Repository: [https://github.com/AstunTechnology/osgis-ol3-leaflet](https://github.com/AstunTechnology/osgis-ol3-leaflet)  
 
 ## What we will build
 
