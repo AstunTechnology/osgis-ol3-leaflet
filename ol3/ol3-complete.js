@@ -98,14 +98,14 @@ planningAppsSource.on('change', function (evt) {
     }
 });
 
-// -- Display information on click --
+// -- Display information on singleclick --
 
 // Create a popup overlay which will be used to display feature info
 var popup = new ol.Overlay.Popup();
 map.addOverlay(popup);
 
-// Add an event handler for the map "click" event
-map.on('click', function(evt) {
+// Add an event handler for the map "singleclick" event
+map.on('singleclick', function(evt) {
 
     // Hide existing popup and reset it's offset
     popup.hide();
