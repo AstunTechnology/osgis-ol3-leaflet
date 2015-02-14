@@ -2,11 +2,11 @@
 
 In order to display information for the WMS layer we need to make a `GetFeatureInfo` request to the WMS server. OL3 provides a [`getGetFeatureInfoUrl`](http://ol3js.org/en/master/apidoc/ol.source.ImageWMS.html#getGetFeatureInfoUrl) function to build the URL which we then make a request to using the [reqwest library](https://github.com/ded/reqwest).
 
-Update `ol3.js` **replacing the existing event handler for the map "click" event** with the following which sends a GetFeatureInfo request if the click was not over a marker and hence no feature is found:
+Update `ol3.js` **replacing the existing event handler for the map "singleclick" event** with the following which sends a GetFeatureInfo request if the click was not over a marker and hence no feature is found:
 
 ```javascript
-// Add an event handler for the map "click" event
-map.on('click', function(evt) {
+// Add an event handler for the map "singleclick" event
+map.on('singleclick', function(evt) {
 
     // Hide existing popup and reset it's offset
     popup.hide();
