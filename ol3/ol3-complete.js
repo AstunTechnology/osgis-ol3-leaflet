@@ -46,9 +46,14 @@ var map = new ol.Map({
     })
 });
 
+// Create a LayerSwitcher instance and add it to the map
+var layerSwitcher = new ol.control.LayerSwitcher();
+map.addControl(layerSwitcher);
+
 // -- Load GB disticts as a WMS layer --
 
 var districtLayer = new ol.layer.Tile({
+    title: 'Local Authorities',
     source: new ol.source.TileWMS({
         url: 'http://osgis.astun.co.uk/geoserver/gwc/service/wms?',
         params: {
@@ -75,6 +80,7 @@ var planningAppsSource = new ol.source.GeoJSON({
 // Create a vector layer to display the features within the GeoJSON source and
 // applies a simple icon style to all features
 var planningAppsLayer = new ol.layer.Vector({
+    title: 'Planning Applications',
     source: planningAppsSource,
     style: new ol.style.Style({
         image: new ol.style.Icon(({
@@ -129,27 +135,31 @@ map.on('singleclick', function(evt) {
 
     } else {
 
-        var url = districtLayer
-                    .getSource()
-                    .getGetFeatureInfoUrl(
-                        evt.coordinate,
-                        map.getView().getResolution(),
-                        map.getView().getProjection(),
-                        {
-                            'INFO_FORMAT': 'application/json',
-                            'propertyName': 'NAME,AREA_CODE,DESCRIPTIO'
-                        }
-                    );
+        if (districtLayer.getVisible()) {
 
-        reqwest({
-            url: url,
-            type: 'json',
-        }).then(function (data) {
-            var feature = data.features[0];
-            var props = feature.properties;
-            var info = "<h2>" + props.NAME + "</h2><p>" + props.DESCRIPTIO + "</p>";
-            popup.show(evt.coordinate, info);
-        });
+            var url = districtLayer
+                        .getSource()
+                        .getGetFeatureInfoUrl(
+                            evt.coordinate,
+                            map.getView().getResolution(),
+                            map.getView().getProjection(),
+                            {
+                                'INFO_FORMAT': 'application/json',
+                                'propertyName': 'NAME,AREA_CODE,DESCRIPTIO'
+                            }
+                        );
+
+            reqwest({
+                url: url,
+                type: 'json',
+            }).then(function (data) {
+                var feature = data.features[0];
+                var props = feature.properties;
+                var info = "<h2>" + props.NAME + "</h2><p>" + props.DESCRIPTIO + "</p>";
+                popup.show(evt.coordinate, info);
+            });
+
+        }
 
     }
 
