@@ -18,8 +18,8 @@ The workshop walks through building the same simple web mapping application firs
 
 Completed versions can be seen here:
 
-* [OpenLayers 3 version](ol3/ol3-complete.html)
-* [Leaflet version](leaflet/leaflet-complete.html)
+* [OpenLayers 3 version](http://astuntechnology.github.io/osgis-ol3-leaflet/ol3/ol3-complete.html)
+* [Leaflet version](http://astuntechnology.github.io/osgis-ol3-leaflet/leaflet/leaflet-complete.html)
 
 ## Getting started
 
